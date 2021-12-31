@@ -1,260 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  
-  <title>**应用回归分析-方差分析** | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="body, td {    font-size: 16px; } code.r{   font-size: 20px; } pre {   font-size: 14px }     一、数据处理赋初值12x &lt;- c(18,20,22,24,26,28,30)y &lt;- c(26.86,28.35,28.75,28.87,29.75,30.00,30.36) 解释这段代码将习题3.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="**应用回归分析-方差分析**">
-<meta property="og:url" content="http://example.com/2021/12/19/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="body, td {    font-size: 16px; } code.r{   font-size: 20px; } pre {   font-size: 14px }     一、数据处理赋初值12x &lt;- c(18,20,22,24,26,28,30)y &lt;- c(26.86,28.35,28.75,28.87,29.75,30.00,30.36) 解释这段代码将习题3.">
-<meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-12-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-12-30T16:25:56.021Z">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
-
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
-
-  
-<meta name="generator" content="Hexo 6.0.0"></head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main"><article id="post-方差分析" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/12/19/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/" class="article-date">
-  <time class="dt-published" datetime="2021-12-18T16:00:00.000Z" itemprop="datePublished">2021-12-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      **应用回归分析-方差分析**
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <style type="text/css">
-
-body, td {
-   font-size: 16px;
-}
-code.r{
-  font-size: 20px;
-}
-pre {
-  font-size: 14px
-}
-</style>
+{% extends '_layout.swig' %}
+{% import '_macro/post.swig' as post_template %}
+{% import '_macro/sidebar.swig' as sidebar_template %}
 
 
+{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
 
-<h3 id="一、数据处理"><a href="#一、数据处理" class="headerlink" title="一、数据处理"></a><strong>一、数据处理</strong></h3><h4 id="赋初值"><a href="#赋初值" class="headerlink" title="赋初值"></a>赋初值</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- <span class="built_in">c</span>(<span class="number">18</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">24</span>,<span class="number">26</span>,<span class="number">28</span>,<span class="number">30</span>)</span><br><span class="line">y &lt;- <span class="built_in">c</span>(<span class="number">26.86</span>,<span class="number">28.35</span>,<span class="number">28.75</span>,<span class="number">28.87</span>,<span class="number">29.75</span>,<span class="number">30.00</span>,<span class="number">30.36</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h4><p>这段代码将习题3.4的数据分别赋给变量x和y。</p>
-<h3 id="二、线性回归并查看结果"><a href="#二、线性回归并查看结果" class="headerlink" title="二、线性回归并查看结果"></a><strong>二、线性回归并查看结果</strong></h3><p>进行线性回归并输出回归结果的R代码如下</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model &lt;- lm(y~x)</span><br><span class="line">print(summary(model))</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">## </span><br><span class="line">## Call:</span><br><span class="line">## lm(formula = y ~ x)</span><br><span class="line">## </span><br><span class="line">## Residuals:</span><br><span class="line">##        1        2        3        4        5        6        7 </span><br><span class="line">## -0.54571  0.41571  0.28714 -0.12143  0.23000 -0.04857 -0.21714 </span><br><span class="line">## </span><br><span class="line">## Coefficients:</span><br><span class="line">##             Estimate Std. Error t value Pr(&gt;|t|)    </span><br><span class="line">## (Intercept)  22.6486     0.8417  26.907 1.33e-06 ***</span><br><span class="line">## x             0.2643     0.0346   7.639 0.000612 ***</span><br><span class="line">## ---</span><br><span class="line">## Signif. codes:  0 &#x27;***&#x27; 0.001 &#x27;**&#x27; 0.01 &#x27;*&#x27; 0.05 &#x27;.&#x27; 0.1 &#x27; &#x27; 1</span><br><span class="line">## </span><br><span class="line">## Residual standard error: 0.3661 on 5 degrees of freedom</span><br><span class="line">## Multiple R-squared:  0.9211,	Adjusted R-squared:  0.9053 </span><br><span class="line">## F-statistic: 58.36 on 1 and 5 DF,  p-value: 0.0006115</span><br></pre></td></tr></table></figure>
-<p>从回归结果可以看出，回归方程为<br>$$y=22.6486+0.2643x$$</p>
-<ul>
-<li><p>我们首先对回归方程做显著性检验，回归方程的F值为58.36，对应的p-值为0.0006115，小于0.05，因此我们拒绝回归方程没有统计意义的原假设。  </p>
-</li>
-<li><p>接着再做对回归系数的显著性检验。常数项的t值为26.907，对应的p-值为1.33e-06，小于0.05，因此我们拒绝常数项没有统计意义的原假设；  </p>
-</li>
-<li><p>变量x的t值为7.639，对应的p-值为0.000612，小于0.05，因此我们拒绝变量x没有统计意义的原假设。</p>
-</li>
-</ul>
-<h3 id="三、方差分析并查看结果"><a href="#三、方差分析并查看结果" class="headerlink" title="三、方差分析并查看结果"></a><strong>三、方差分析并查看结果</strong></h3><p>进行方差分析并给出结果并输出回归结果的R代码如下</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test &lt;- anova(model)</span><br><span class="line">print(summary(test))</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">##        Df        Sum Sq          Mean Sq         F value          Pr(&gt;F)         </span><br><span class="line">##  Min.   :1   Min.   :0.6702   Min.   :0.134   Min.   :58.36   Min.   :0.0006115  </span><br><span class="line">##  1st Qu.:2   1st Qu.:2.4584   1st Qu.:2.056   1st Qu.:58.36   1st Qu.:0.0006115  </span><br><span class="line">##  Median :3   Median :4.2465   Median :3.978   Median :58.36   Median :0.0006115  </span><br><span class="line">##  Mean   :3   Mean   :4.2465   Mean   :3.978   Mean   :58.36   Mean   :0.0006115  </span><br><span class="line">##  3rd Qu.:4   3rd Qu.:6.0347   3rd Qu.:5.901   3rd Qu.:58.36   3rd Qu.:0.0006115  </span><br><span class="line">##  Max.   :5   Max.   :7.8229   Max.   :7.823   Max.   :58.36   Max.   :0.0006115  </span><br><span class="line">##                                               NA&#x27;s   :1       NA&#x27;s   :1</span><br></pre></td></tr></table></figure>
-
-<h3 id="四、预测"><a href="#四、预测" class="headerlink" title="四、预测"></a><strong>四、预测</strong></h3><p>对x<del>0</del>=27.5，求y<del>0</del>的包含概率伟0.95的预测区间</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x_new &lt;- data.frame(x=<span class="number">27.5</span>);x_new</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">##      x</span><br><span class="line">## 1 27.5</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">predict(model,x_new,interval=<span class="string">&#x27;prediction&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">##        fit      lwr     upr</span><br><span class="line">## 1 29.91643 28.86325 30.9696</span><br></pre></td></tr></table></figure>
-<p>从图中我们可以看出，当x<del>0</del>=27.5时，y<del>0</del>的预测值为1 29.91643，95%的置信区间为[28.86325,30.9696]。</p>
-<h3 id="五、附录"><a href="#五、附录" class="headerlink" title="五、附录"></a><strong>五、附录</strong></h3><p>习题4.5的R完整代码如下</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 清空窗口</span></span><br><span class="line">rm(<span class="built_in">list</span>=ls())</span><br><span class="line"></span><br><span class="line"><span class="comment">## 数据处理</span></span><br><span class="line">x &lt;- <span class="built_in">c</span>(<span class="number">18</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">24</span>,<span class="number">26</span>,<span class="number">28</span>,<span class="number">30</span>);</span><br><span class="line">y &lt;- <span class="built_in">c</span>(<span class="number">26.86</span>,<span class="number">28.35</span>,<span class="number">28.75</span>,<span class="number">28.87</span>,<span class="number">29.75</span>,<span class="number">30.00</span>,<span class="number">30.36</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">## 线性回归并查看结果</span></span><br><span class="line">model &lt;- lm(y~x)</span><br><span class="line">print(summary(model))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 方差分析并查看结果</span></span><br><span class="line">test &lt;- anova(model)</span><br><span class="line">print(summary(test))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 预测</span></span><br><span class="line">x_new &lt;- data.frame(x=<span class="number">27.5</span>);</span><br><span class="line">predict(model,x_new,interval=<span class="string">&#x27;prediction&#x27;</span>)</span><br></pre></td></tr></table></figure>
+{% block page_class %}page-post-detail{% endblock %}
 
 
+{% block content %}
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/12/19/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/" data-id="ckxt729z20000gctbf96x6t7x" data-title="**应用回归分析-方差分析**" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2021/12/30/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Hello World
-        
-      </div>
-    </a>
-  
-  
-</nav>
+  <div id="posts" class="posts-expand">
+    {{ post_template.render(page) }}
 
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li></ul>
+    <div class="post-spread">
+      {% if theme.jiathis %}
+        {% include '_partials/share/jiathis.swig' %}
+      {% elseif theme.baidushare %}
+        {% include '_partials/share/baidushare.swig' %}
+      {% elseif theme.add_this_id %}
+        {% include '_partials/share/add-this.swig' %}
+      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
+        {% include '_partials/share/duoshuo_share.swig' %}
+      {% endif %}
     </div>
   </div>
 
+{% endblock %}
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2021/12/30/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
-            <a href="/2021/12/19/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/">**应用回归分析-方差分析**</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+{% block sidebar %}
+  {{ sidebar_template.render(true) }}
+{% endblock %}
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2021 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
-
-
-
-  
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
-</body>
-</html>
+{% block script_extra %}
+  {% include '_scripts/pages/post-details.swig' %}
+{% endblock %}
