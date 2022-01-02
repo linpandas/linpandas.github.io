@@ -22,14 +22,15 @@
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 <meta name="description" content="这篇文章介绍了R语言的基本数据类型、R的各种类型向量（包括数值型向量，字符型向量和逻辑型向量）及其运算。碍于时间原因，无法一次写完，故本篇文章长期更新。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="R向量及其操作">
+<meta property="og:title" content="&lt;b&gt;R向量及其操作&lt;&#x2F;b&gt;">
 <meta property="og:url" content="https://yoursite.com/2022/01/02/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="杜遇随笔">
 <meta property="og:description" content="这篇文章介绍了R语言的基本数据类型、R的各种类型向量（包括数值型向量，字符型向量和逻辑型向量）及其运算。碍于时间原因，无法一次写完，故本篇文章长期更新。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-01-02T13:32:06.096Z">
+<meta property="article:modified_time" content="2022-01-02T14:47:47.182Z">
 <meta property="article:author" content="linpandas">
+<meta property="article:tag" content="R语言">
 <meta name="twitter:card" content="summary">
 
 
@@ -37,10 +38,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2022/01/02/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/","path":"2022/01/02/R向量及其操作/","title":"R向量及其操作"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2022/01/02/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/","path":"2022/01/02/R向量及其操作/","title":"\u003cb>R向量及其操作\u003c/b>"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>R向量及其操作 | 杜遇随笔</title>
+<title><b>R向量及其操作</b> | 杜遇随笔</title>
   
 
 
@@ -137,6 +138,16 @@
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
@@ -194,7 +205,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          R向量及其操作
+          <b>R向量及其操作</b>
         </h1>
 
         <div class="post-meta-container">
@@ -206,7 +217,16 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-01-02 00:00:00 / 修改时间：21:32:06" itemprop="dateCreated datePublished" datetime="2022-01-02T00:00:00+08:00">2022-01-02</time>
+      <time title="创建时间：2022-01-02 00:00:00 / 修改时间：22:47:47" itemprop="dateCreated datePublished" datetime="2022-01-02T00:00:00+08:00">2022-01-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/R%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">R语言学习笔记</span></a>
+        </span>
     </span>
 
   
@@ -300,13 +320,16 @@ pre {
   </div>
 </div>
 
+          <div class="post-tags">
+              <a href="/tags/R%E8%AF%AD%E8%A8%80/" rel="tag"># R语言</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/12/31/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/" rel="prev" title="<center><b>应用回归分析-方差分析</b></center>">
-                  <i class="fa fa-chevron-left"></i> <center><b>应用回归分析-方差分析</b></center>
+                <a href="/2021/12/31/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/" rel="prev" title="<b>应用回归分析-方差分析</b>">
+                  <i class="fa fa-chevron-left"></i> <b>应用回归分析-方差分析</b>
                 </a>
             </div>
             <div class="post-nav-item">
