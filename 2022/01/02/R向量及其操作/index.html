@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="这篇文章介绍了R语言的基本数据类型、R的各种类型向量（包括数值型向量，字符型向量和逻辑型向量）及其运算。碍于时间原因，无法一次写完，故本篇文章长期更新。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R向量及其操作">
+<meta property="og:url" content="https://yoursite.com/2022/01/02/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="杜遇随笔">
+<meta property="og:description" content="这篇文章介绍了R语言的基本数据类型、R的各种类型向量（包括数值型向量，字符型向量和逻辑型向量）及其运算。碍于时间原因，无法一次写完，故本篇文章长期更新。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-02T13:32:06.096Z">
+<meta property="article:author" content="linpandas">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yoursite.com/2022/01/02/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2022/01/02/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/","path":"2022/01/02/R向量及其操作/","title":"R向量及其操作"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>R向量及其操作 | 杜遇随笔</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">杜遇随笔</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%B8%B8%E9%87%8F%E4%B8%8E%E5%8F%98%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">1 常量与变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%B8%B8%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 常量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%8F%98%E9%87%8F"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-R%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 R数据类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%95%B0%E5%80%BC%E5%9E%8B%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E8%BF%90%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">2 数值型向量及其运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%95%B0%E5%80%BC%E5%9E%8B%E5%90%91%E9%87%8F"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 数值型向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%90%91%E9%87%8F%E8%BF%90%E7%AE%97"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 向量运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E6%A0%87%E9%87%8F%E4%B8%8E%E6%A0%87%E9%87%8F%E8%BF%90%E7%AE%97"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 标量与标量运算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E5%90%91%E9%87%8F%E4%B8%8E%E6%A0%87%E9%87%8F%E8%BF%90%E7%AE%97"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 向量与标量运算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-%E7%AD%89%E9%95%BF%E5%90%91%E9%87%8F%E8%BF%90%E7%AE%97"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 等长向量运算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-4-%E4%B8%8D%E7%AD%89%E9%95%BF%E5%90%91%E9%87%8F%E8%BF%90%E7%AE%97"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.2.4 不等长向量运算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%B4%E8%B0%A2"><span class="nav-number">3.</span> <span class="nav-text">致谢</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="linpandas"
+      src="/images/portrait.gif">
+  <p class="site-author-name" itemprop="name">linpandas</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/linpandas" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;linpandas" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:juguodu@163.com" title="E-Mail → mailto:juguodu@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2022/01/02/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/portrait.gif">
+      <meta itemprop="name" content="linpandas">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杜遇随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          R向量及其操作
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-02 00:00:00 / 修改时间：21:32:06" itemprop="dateCreated datePublished" datetime="2022-01-02T00:00:00+08:00">2022-01-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>这篇文章介绍了R语言的基本数据类型、R的各种类型向量（包括数值型向量，字符型向量和逻辑型向量）及其运算。<br>碍于时间原因，无法一次写完，故本篇文章长期更新。</p>
+<span id="more"></span>
+
+<style type="text/css">
+
+body, td {
+   font-size: 16px;
+}
+code.r{
+  font-size: 20px;
+}
+pre {
+  font-size: 14px
+}
+</style>
+
+<h2 id="1-常量与变量"><a href="#1-常量与变量" class="headerlink" title="1 常量与变量"></a><strong>1 常量与变量</strong></h2><h3 id="1-1-常量"><a href="#1-1-常量" class="headerlink" title="1.1 常量"></a><strong>1.1 常量</strong></h3><p>常量是指直接写在程序中的值，包括数值型常量、字符型常量和逻辑型常量。</p>
+<p>数值型常量包括整型、单精度、双精度等，与C语言类似，但没有C语言区分得那么严格。如123，123.45，15.2E-2等，为了表示123是整型，可以写成123L。</p>
+<p>字符型常量用两个双撇号””或两个单撇号包围。如”linpandas”或’linpandas’。在RStudio中，为了支持中文，一般采用UTF-8进行编码。</p>
+<p>逻辑型常量只有TRUE（或T）和FALSE（或F），表示真值和假值。</p>
+<p>缺失值用NA表示。</p>
+<h3 id="1-2-变量"><a href="#1-2-变量" class="headerlink" title="1.2 变量"></a><strong>1.2 变量</strong></h3><p>变量用来保存输入的值或者计算得到的值。在R中，变量可以保存所有的数据类型，比如标量、向量、矩阵、数据框、函数等。</p>
+<p>R变量的命名必须以字母、数字、下划线和句点组成，变量名的第一个字符不能取为数字。如x、X、sum_Y等。在R中，字母的大小写被严格区分。</p>
+<p>R对变量赋值可以用等号=，也可以用&lt;-,使用&lt;-更直观。在RStudio中，可以用快捷键Alt + -生成&lt;-。</p>
+<h3 id="1-3-R数据类型"><a href="#1-3-R数据类型" class="headerlink" title="1.3 R数据类型"></a><strong>1.3 R数据类型</strong></h3><p>R语言基本的数据类型有数值，逻辑型（TRUE,FALSE），文本（字符串）。支持缺失值，有专门的复数类型。</p>
+<p>R语言数据结构包括向量，矩阵和数据框，多维数组， 列表，对象等。</p>
+<h2 id="2-数值型向量及其运算"><a href="#2-数值型向量及其运算" class="headerlink" title="2 数值型向量及其运算"></a><strong>2 数值型向量及其运算</strong></h2><h3 id="2-1-数值型向量"><a href="#2-1-数值型向量" class="headerlink" title="2.1 数值型向量"></a><strong>2.1 数值型向量</strong></h3><p>向量是将若干个基础类型相同的值存储在一起，各个元素可以按序号访问。</p>
+<p>如果将若干个数值型的常量存储在一起可以用序号访问，就叫做一个数值型向量。</p>
+<p>用c()函数把多个元素或向量组合成一个向量。如</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- <span class="built_in">c</span>(<span class="number">1</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>);x</span><br><span class="line"><span class="comment">## [1] 1 5 6 7 8</span></span><br><span class="line">x1 &lt;- <span class="built_in">c</span>(<span class="number">1</span>:<span class="number">3</span>,<span class="number">2</span>:<span class="number">4</span>)</span><br><span class="line">x2 &lt;- <span class="built_in">c</span>(x,x1);x2</span><br><span class="line"><span class="comment">##  [1] 1 5 6 7 8 1 2 3 2 3 4</span></span><br></pre></td></tr></table></figure>
+<p>1:3表示从1到3的整数组成的向量，显然步长为1。</p>
+<p>用print()函数显示向量或在命令行中显示向量时，每行显示的行首会有方括号和数字序号，代表该行显示的第一个向量元素的下标。如</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="number">1</span>:<span class="number">99</span>)</span><br><span class="line"><span class="comment">##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38</span></span><br><span class="line"><span class="comment">## [39] 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76</span></span><br><span class="line"><span class="comment">## [77] 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99</span></span><br></pre></td></tr></table></figure>
+<p>length(x)可以求向量x的长度。长度为零的向量可以用numeric(0)表示。numeric()函数可以用来初始化一个指定元素个数而元素都等于零的数值型向量，如numeric(10)会生成元素为10个零的向量。</p>
+<h3 id="2-2-向量运算"><a href="#2-2-向量运算" class="headerlink" title="2.2 向量运算"></a><strong>2.2 向量运算</strong></h3><h4 id="2-2-1-标量与标量运算"><a href="#2-2-1-标量与标量运算" class="headerlink" title="2.2.1 标量与标量运算"></a><strong>2.2.1 标量与标量运算</strong></h4><p>单个数值称为标量， R没有单独的标量类型，标量实际是长度为1的向量。<br>常见的特殊标量如\pi用pi表示，自然对数的底数e用exp(1)表示。</p>
+<p>R中四则运算用+ - * / ^表示(加、减、乘、除、乘方)；R中四则运算仍遵从通常的优先级规则， 可以用圆括号()改变运算的先后次序。如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2.3*(<span class="number">1.5</span>+<span class="number">5.6</span>)+<span class="number">2</span>^<span class="number">3</span>-<span class="number">2</span>*<span class="built_in">pi</span></span><br><span class="line"><span class="comment">## [1] 18.04681</span></span><br></pre></td></tr></table></figure>
+
+<p>除了四则运算R还支持整除运算和求余运算。用%/%表示整除，用%%表示求余。如</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5%/%3   <span class="comment">#5整除3的商</span></span><br><span class="line"><span class="comment">## [1] 1</span></span><br><span class="line"><span class="number">5</span>%%3    <span class="comment">#5整除3的余数</span></span><br><span class="line"><span class="comment">## [1] 2</span></span><br><span class="line"><span class="number">5.1</span>%%2.5</span><br><span class="line"><span class="comment">## [1] 0.1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-2-向量与标量运算"><a href="#2-2-2-向量与标量运算" class="headerlink" title="2.2.2 向量与标量运算"></a><strong>2.2.2 向量与标量运算</strong></h4><p>向量与标量的运算为每个元素与标量的运算。如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- <span class="built_in">c</span>(<span class="number">10</span>:<span class="number">12</span>)</span><br><span class="line">x+<span class="number">2</span></span><br><span class="line"><span class="comment">## [1] 12 13 14</span></span><br><span class="line">x-<span class="number">2</span></span><br><span class="line"><span class="comment">## [1]  8  9 10</span></span><br><span class="line">x*<span class="number">2</span></span><br><span class="line"><span class="comment">## [1] 20 22 24</span></span><br><span class="line">x/<span class="number">2</span></span><br><span class="line"><span class="comment">## [1] 5.0 5.5 6.0</span></span><br><span class="line">x^<span class="number">2</span></span><br><span class="line"><span class="comment">## [1] 100 121 144</span></span><br><span class="line"><span class="number">2</span>/x</span><br><span class="line"><span class="comment">## [1] 0.2000000 0.1818182 0.1666667</span></span><br><span class="line"><span class="number">2</span>^x</span><br><span class="line"><span class="comment">## [1] 1024 2048 4096</span></span><br></pre></td></tr></table></figure>
+<p>一个向量乘以一个标量，就是线性代数中的数乘运算。</p>
+<p>四则运算时如果有缺失值，缺失元素参加的运算相应结果元素仍缺失。 如</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">c</span>(<span class="number">10</span>,<span class="literal">NA</span>,<span class="number">15</span>)+<span class="number">3</span></span><br><span class="line"><span class="comment">## [1] 13 NA 18</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-3-等长向量运算"><a href="#2-2-3-等长向量运算" class="headerlink" title="2.2.3 等长向量运算"></a><strong>2.2.3 等长向量运算</strong></h4><p>等长向量的运算为对应元素的两两运算。如</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">x1 &lt;- <span class="built_in">c</span>(<span class="number">3</span>,<span class="number">7</span>,<span class="number">6</span>)</span><br><span class="line">x2 &lt;- 2:<span class="number">4</span></span><br><span class="line">x1+x2</span><br><span class="line"><span class="comment">## [1]  5 10 10</span></span><br><span class="line">x1-x2</span><br><span class="line"><span class="comment">## [1] 1 4 2</span></span><br><span class="line">x1*x2</span><br><span class="line"><span class="comment">## [1]  6 21 24</span></span><br><span class="line">x1/x2</span><br><span class="line"><span class="comment">## [1] 1.500000 2.333333 1.500000</span></span><br><span class="line">x1^x2</span><br><span class="line"><span class="comment">## [1]    9  343 1296</span></span><br></pre></td></tr></table></figure>
+<p>两个等长向量的加、减运算就是线性代数中两个向量的加、减运算。</p>
+<h4 id="2-2-4-不等长向量运算"><a href="#2-2-4-不等长向量运算" class="headerlink" title="2.2.4 不等长向量运算"></a><strong>2.2.4 不等长向量运算</strong></h4><p>两个不等长向量的四则运算，如果其长度为倍数关系，规则是每次从头重复利用短的向量。如</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">x1 &lt;- <span class="built_in">c</span>(<span class="number">2</span>,<span class="number">7</span>,<span class="number">11</span>)</span><br><span class="line">x2 &lt;- 3:<span class="number">5</span></span><br><span class="line">x1+x2</span><br><span class="line"><span class="comment">## [1]  5 11 16</span></span><br><span class="line">x1*x2</span><br><span class="line"><span class="comment">## [1]  6 28 55</span></span><br></pre></td></tr></table></figure>
+
+<p>不仅是四则运算，R中有两个或多个向量按照元素一一对应参与某种运算或函数调用时，如果向量长度不同，一般都采用这样的规则。<br>如果两个向量的长度不是倍数关系，会给出警告信息。</p>
+<h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a><strong>致谢</strong></h2><p>本篇文章参考了北京大学李东风老师的《Rbook》：<a target="_blank" rel="noopener" href="https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbook/intro.html">李东风老师的Rbook</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="linpandas 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="linpandas 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/31/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/" rel="prev" title="<center><b>应用回归分析-方差分析</b></center>">
+                  <i class="fa fa-chevron-left"></i> <center><b>应用回归分析-方差分析</b></center>
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">linpandas</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
