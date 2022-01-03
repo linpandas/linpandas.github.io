@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="这篇文章介绍了R语言的因子类型及其基本运算。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&lt;b&gt;R因子类型&lt;&#x2F;b&gt;">
+<meta property="og:url" content="https://yoursite.com/2022/01/03/R%E5%9B%A0%E5%AD%90%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="杜遇随笔">
+<meta property="og:description" content="这篇文章介绍了R语言的因子类型及其基本运算。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-01-03T15:13:25.053Z">
+<meta property="article:author" content="linpandas">
+<meta property="article:tag" content="R语言">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yoursite.com/2022/01/03/R%E5%9B%A0%E5%AD%90%E7%B1%BB%E5%9E%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2022/01/03/R%E5%9B%A0%E5%AD%90%E7%B1%BB%E5%9E%8B/","path":"2022/01/03/R因子类型/","title":"\u003cb>R因子类型\u003c/b>"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title><b>R因子类型</b> | 杜遇随笔</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">杜遇随笔</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9B%A0%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">1 因子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-cut-%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">2 cut()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-table-%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">3 table()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-tapply-%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">4 tapply()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-forcats%E5%8C%85%E7%9A%84%E5%9B%A0%E5%AD%90%E5%87%BD%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">5 forcats包的因子函数</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="linpandas"
+      src="/images/portrait.gif">
+  <p class="site-author-name" itemprop="name">linpandas</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/linpandas" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;linpandas" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:juguodu@163.com" title="E-Mail → mailto:juguodu@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2022/01/03/R%E5%9B%A0%E5%AD%90%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/portrait.gif">
+      <meta itemprop="name" content="linpandas">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杜遇随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          <b>R因子类型</b>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-01-03 00:00:00 / 修改时间：23:13:25" itemprop="dateCreated datePublished" datetime="2022-01-03T00:00:00+08:00">2022-01-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/R%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">R语言学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>这篇文章介绍了R语言的因子类型及其基本运算。</p>
+<span id="more"></span>
+<style type="text/css">
+
+body, td {
+   font-size: 16px;
+}
+code.r{
+  font-size: 20px;
+}
+pre {
+  font-size: 14px
+}
+</style>
+
+<h3 id="1-因子"><a href="#1-因子" class="headerlink" title="1 因子"></a><strong>1 因子</strong></h3><p>R中用因子代表数据中分类变量，如性别、省份、职业。有序因子代表有序量度，如打分结果，疾病严重程度等。</p>
+<p>用函数factor()把字符型向量转换成因子，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">x &lt;- <span class="built_in">c</span>(<span class="string">&#x27;Male&#x27;</span>,<span class="string">&#x27;Female&#x27;</span>,<span class="string">&#x27;Male&#x27;</span>,<span class="string">&#x27;Male&#x27;</span>,<span class="string">&#x27;Female&#x27;</span>)</span><br><span class="line">sex &lt;- factor(x)</span><br><span class="line">sex</span><br><span class="line"><span class="comment">## [1] Male   Female Male   Male   Female</span></span><br><span class="line"><span class="comment">## Levels: Female Male</span></span><br><span class="line"><span class="built_in">attributes</span>(sex)</span><br><span class="line"><span class="comment">## $levels</span></span><br><span class="line"><span class="comment">## [1] &quot;Female&quot; &quot;Male&quot;  </span></span><br><span class="line"><span class="comment">## </span></span><br><span class="line"><span class="comment">## $class</span></span><br><span class="line"><span class="comment">## [1] &quot;factor&quot;</span></span><br></pre></td></tr></table></figure>
+<p>可以看出，因子有class属性，取值为“factor”；还有一个levels（水平值）属性，取值为“Female”、“Male”，此属性可以用levels()函数访问，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">levels(sex)</span><br><span class="line"><span class="comment">## [1] &quot;Female&quot; &quot;Male&quot;</span></span><br></pre></td></tr></table></figure>
+<p>因子的levels属性可以看成是一个映射，把整数值1,2,…映射成这些水平值，因子在保存时会保存成整数值1,2,…等与水平值对应的编号。</p>
+<p>事实上，read.csv()函数的默认操作会把输入文件的字符型列自动转换成因子，这对于性别、职业、地名这样的列是合适的，但是对于姓名、日期、详细地址这样的列则不合适。所以，在read.csv()调用中经常加选项<strong>stringAsFactors=FALSE”</strong>选项禁止这样的自动转换，还可以用colClasses选项逐个指定每列的类型。建议改用readr包的read_csv()函数，这个函数读入CSV文件时不自动转换成因子，生成的data.frame的替代类型tibble。</p>
+<p>用as.numeric()可以把因子转换为纯粹的整数值，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">as.numeric</span>(sex)</span><br><span class="line"><span class="comment">## [1] 2 1 2 2 1</span></span><br></pre></td></tr></table></figure>
+<p>因为因子实际保存为整数值，所以对因子进行一些字符型操作可能导致错误。用as.character()可以把因子转换为原来的字符型，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">as.character</span>(sex)</span><br><span class="line"><span class="comment">## [1] &quot;Male&quot;   &quot;Female&quot; &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot;</span></span><br></pre></td></tr></table></figure>
+<p>为了对因子执行字符型操作（如取子串），保险的做法是先用as.character()函数强制转换为字符型。</p>
+<h3 id="2-cut-函数"><a href="#2-cut-函数" class="headerlink" title="2 cut()函数"></a><strong>2 cut()函数</strong></h3><p>对于连续取值的变量，可以用cut()函数将其分段，转换成因子。使用breaks()参数指定分点，最小分点要<strong>小于</strong>数据的最小值，最大分点要<strong>大于等于</strong>数据的最大值，默认使用<strong>左开右闭</strong>区间分组，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cut(<span class="number">1</span>:<span class="number">10</span>,breaks=<span class="built_in">c</span>(<span class="number">0</span>,<span class="number">5</span>,<span class="number">10</span>))</span><br><span class="line"><span class="comment">##  [1] (0,5]  (0,5]  (0,5]  (0,5]  (0,5]  (5,10] (5,10] (5,10] (5,10] (5,10]</span></span><br><span class="line"><span class="comment">## Levels: (0,5] (5,10]</span></span><br></pre></td></tr></table></figure>
+<p>可以指定breaks为一个正整数，表示将数据范围略扩大后进行等间距分组，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">set.seed(<span class="number">1</span>)   <span class="comment"># 设置随机数发生的种子</span></span><br><span class="line">x &lt;- sort(<span class="built_in">round</span>(rnorm(<span class="number">20</span>),<span class="number">2</span>))</span><br><span class="line">f &lt;- cut(x,breaks=<span class="number">4</span>);f</span><br><span class="line"><span class="comment">##  [1] (-2.21,-1.26]  (-1.26,-0.305] (-1.26,-0.305] (-1.26,-0.305] (-1.26,-0.305] (-1.26,-0.305] (-0.305,0.647] (-0.305,0.647]</span></span><br><span class="line"><span class="comment">##  [9] (-0.305,0.647] (-0.305,0.647] (-0.305,0.647] (-0.305,0.647] (-0.305,0.647] (-0.305,0.647] (0.647,1.6]    (0.647,1.6]   </span></span><br><span class="line"><span class="comment">## [17] (0.647,1.6]    (0.647,1.6]    (0.647,1.6]    (0.647,1.6]   </span></span><br><span class="line"><span class="comment">## Levels: (-2.21,-1.26] (-1.26,-0.305] (-0.305,0.647] (0.647,1.6]</span></span><br></pre></td></tr></table></figure>
+<p>可以修改水平标记，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">levels(f) &lt;- <span class="built_in">c</span>(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;d&#x27;</span>);f</span><br><span class="line"><span class="comment">##  [1] a b b b b b c c c c c c c c d d d d d d</span></span><br><span class="line"><span class="comment">## Levels: a b c d</span></span><br></pre></td></tr></table></figure>
+<p>为了实现各组个数比较平均的分组，可以利用quantile()函数计算分位数作为分组，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cu &lt;- quantile(x,<span class="built_in">c</span>(<span class="number">0</span>,<span class="number">1</span>/<span class="number">4</span>,<span class="number">1</span>/<span class="number">2</span>,<span class="number">3</span>/<span class="number">4</span>,<span class="number">1</span>))</span><br><span class="line">cu[<span class="number">1</span>] &lt;- cu[<span class="number">1</span>]-<span class="number">0.01</span>*(cu[<span class="number">5</span>]-cu[<span class="number">1</span>])</span><br><span class="line">f2 &lt;- cut(x,breaks=cu,ordered_result = <span class="literal">TRUE</span>)</span><br><span class="line">levels(f2)</span><br><span class="line"><span class="comment">## [1] &quot;(-2.25,-0.387]&quot; &quot;(-0.387,0.36]&quot;  &quot;(0.36,0.76]&quot;    &quot;(0.76,1.6]&quot;</span></span><br></pre></td></tr></table></figure>
+<p>参数ordered_result=TRUE表示生成有序因子。</p>
+<h3 id="3-table-函数"><a href="#3-table-函数" class="headerlink" title="3 table()函数"></a><strong>3 table()函数</strong></h3><p>用table()函数统计因子各水平出现次数（称为频数或频率）。 也可以对一般的向量统计每个不同元素的出现次数。 如</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">table(sex)</span><br><span class="line"><span class="comment">## sex</span></span><br><span class="line"><span class="comment">## Female   Male </span></span><br><span class="line"><span class="comment">##      2      3</span></span><br></pre></td></tr></table></figure>
+<p>对一个变量用table函数计数的结果是一个特殊的有元素名的向量，元素名是自变量的不同取值，结果的元素值是对应的频数。单个因子或单个向量的频数结果可以用向量的下标访问方法取出单个频数或若干个频数的子集。</p>
+<h3 id="4-tapply-函数"><a href="#4-tapply-函数" class="headerlink" title="4 tapply()函数"></a><strong>4 tapply()函数</strong></h3><p>可以按照因子分组然后每组计算另一变量的概括统计。如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">h &lt;- <span class="built_in">c</span>(<span class="number">165</span>,<span class="number">170</span>,<span class="number">168</span>,<span class="number">172</span>,<span class="number">159</span>)</span><br><span class="line">tapply(h,sex,mean)</span><br><span class="line"><span class="comment">##   Female     Male </span></span><br><span class="line"><span class="comment">## 164.5000 168.3333</span></span><br></pre></td></tr></table></figure>
+<p>这里第一自变量h与第二自变量sex是等长的，对应元素分别为同一人的身高和性别，tapply()函数分男女两组计算了身高平均值。</p>
+<h3 id="5-forcats包的因子函数"><a href="#5-forcats包的因子函数" class="headerlink" title="5 forcats包的因子函数"></a><strong>5 forcats包的因子函数</strong></h3><p>首先导入包forcats。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">library(forcats)</span><br></pre></td></tr></table></figure>
+<p>在分类变量类数比较多时，往往需要对因子水平另外排序、合并等，forcats包提供了一些针对因子的方便函数。</p>
+<p>forcats::fct_reorder()可以根据不同因子水平分成的组中另一数值型变量的统计量值排序。如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">set.seed(<span class="number">1</span>)</span><br><span class="line">fac &lt;- sample(<span class="built_in">c</span>(<span class="string">&quot;red&quot;</span>, <span class="string">&quot;green&quot;</span>, <span class="string">&quot;blue&quot;</span>),<span class="number">30</span>,replace=<span class="literal">TRUE</span>)   <span class="comment"># 有放回抽样</span></span><br><span class="line">fac &lt;- factor(fac,levels=<span class="built_in">c</span>(<span class="string">&quot;red&quot;</span>, <span class="string">&quot;green&quot;</span>, <span class="string">&quot;blue&quot;</span>))</span><br><span class="line">x &lt;- <span class="built_in">round</span>(<span class="number">100</span>*(<span class="number">10</span>+rt(<span class="number">30</span>,<span class="number">2</span>)))</span><br><span class="line">res1 &lt;- tapply(x,fac,sd);res1</span><br><span class="line"><span class="comment">##       red     green      blue </span></span><br><span class="line"><span class="comment">##  370.9222  138.3185 1129.2587</span></span><br></pre></td></tr></table></figure>
+<p>如果希望按照统计量次序对因子排序，可以用forcats::fct_reorder()函数，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fac2 &lt;- fct_reorder(fac,x,sd)</span><br><span class="line">res2 &lt;- tapply(x,fac2,sd)</span><br></pre></td></tr></table></figure>
+<p>新的因子fac2的因子水平次序已经按照变量x的标准差从小到大排列。</p>
+<p>有时在因子水平数较多时仅想将特定的一个或几个水平次序放到因子水平最前面，可以用forcats::fct_relevel()函数，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">levels(fac)</span><br><span class="line"><span class="comment">## [1] &quot;red&quot;   &quot;green&quot; &quot;blue&quot;</span></span><br><span class="line">fac3 &lt;- fct_relevel(fac, <span class="string">&quot;blue&quot;</span>); levels(fac3)</span><br><span class="line"><span class="comment">## [1] &quot;blue&quot;  &quot;red&quot;   &quot;green&quot;</span></span><br></pre></td></tr></table></figure>
+<p>fct_relevel()第一个参数是要修改次序的因子，后续可以有多个字符型参数表示要提前的水平。</p>
+<p>forcats::fct_reorder2(f,x,y)也调整因子f的水平的次序，但是根据与每组中最大的x值相对应的y值大小调整次序，这样在作多个因子水平对应的曲线图时可以比较容易地区分多条曲线。</p>
+<p>forcats::fct_recode()可以修改每个水平的名称，如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fac4 &lt;- fct_recode(</span><br><span class="line">  fac,</span><br><span class="line">  <span class="string">&quot;红&quot;</span>=<span class="string">&quot;red&quot;</span>, <span class="string">&quot;绿&quot;</span>=<span class="string">&quot;green&quot;</span>, <span class="string">&quot;蓝&quot;</span>=<span class="string">&quot;blue&quot;</span>)</span><br><span class="line">table(fac4)</span><br><span class="line"><span class="comment">## fac4</span></span><br><span class="line"><span class="comment">## 红 绿 蓝 </span></span><br><span class="line"><span class="comment">## 13 10  7</span></span><br></pre></td></tr></table></figure>
+<p>fct_recode()在修改水平名时允许多个旧水平对应到一个新水平，从而合并原来的水平。如果合并很多，可以用fct_collapse()函数。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="linpandas 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="linpandas 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/R%E8%AF%AD%E8%A8%80/" rel="tag"># R语言</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/02/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/" rel="prev" title="<b>R向量及其操作</b>">
+                  <i class="fa fa-chevron-left"></i> <b>R向量及其操作</b>
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/01/03/Blog%E5%AD%97%E4%BD%93%E6%A0%BC%E5%BC%8F%E6%A8%A1%E6%9D%BF/" rel="next" title="<b>Blog排版随记</b>">
+                  <b>Blog排版随记</b> <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">linpandas</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
