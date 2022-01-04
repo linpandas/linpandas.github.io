@@ -20,23 +20,28 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta property="og:type" content="website">
-<meta property="og:title" content="杜遇随笔">
-<meta property="og:url" content="https://yoursite.com/categories/R%E8%AF%AD%E8%A8%80%E5%AE%9E%E6%88%98/index.html">
+<meta name="description" content="这篇文章简单介绍了R语言读取CSV格式文件的方法，包括自带的read.csv()函数和readr扩展包及其内部的函数。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&lt;b&gt;R读取CSV格式的文件&lt;&#x2F;b&gt;">
+<meta property="og:url" content="https://yoursite.com/2022/01/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="杜遇随笔">
+<meta property="og:description" content="这篇文章简单介绍了R语言读取CSV格式文件的方法，包括自带的read.csv()函数和readr扩展包及其内部的函数。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-04T12:46:12.263Z">
+<meta property="article:modified_time" content="2022-01-04T12:59:29.928Z">
 <meta property="article:author" content="linpandas">
+<meta property="article:tag" content="R语言">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://yoursite.com/categories/R%E8%AF%AD%E8%A8%80%E5%AE%9E%E6%88%98/">
+<link rel="canonical" href="https://yoursite.com/2022/01/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"categories/R语言实战/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2022/01/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/","path":"2022/01/04/R读取CSV格式的文件/","title":"\u003cb>R读取CSV格式的文件\u003c/b>"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>分类: R语言实战 | 杜遇随笔</title>
+<title><b>R读取CSV格式的文件</b> | 杜遇随笔</title>
   
 
 
@@ -101,7 +106,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -114,6 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-read-csv-%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">1 read.csv()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-readr%E5%8C%85%E5%8F%8A%E5%85%B6%E5%86%85%E9%83%A8%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">2 readr包及其内部的函数</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,50 +181,142 @@
 </noscript>
 
 
-    <div class="main-inner category posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">R语言实战
-          <small>分类</small>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2022/01/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/portrait.gif">
+      <meta itemprop="name" content="linpandas">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杜遇随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          <b>R读取CSV格式的文件</b>
         </h1>
-      </div>
 
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+
+      <time title="创建时间：2022-01-04 20:46:12 / 修改时间：20:59:29" itemprop="dateCreated datePublished" datetime="2022-01-04T20:46:12+08:00">2022-01-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/R%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">R语言学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>这篇文章简单介绍了R语言读取CSV格式文件的方法，包括自带的read.csv()函数和readr扩展包及其内部的函数。</p>
+<span id="more"></span>
+<style type="text/css">
+
+body, td {
+   font-size: 16px;
+}
+code.r{
+  font-size: 20px;
+}
+pre {
+  font-size: 14px
+}
+</style>
+
+
+<h3 id="1-read-csv-函数"><a href="#1-read-csv-函数" class="headerlink" title="1 read.csv()函数"></a><strong>1 read.csv()函数</strong></h3><p>read.csv()函数将CSV文件读取为data.frame数据框。</p>
+<h3 id="2-readr包及其内部的函数"><a href="#2-readr包及其内部的函数" class="headerlink" title="2 readr包及其内部的函数"></a><strong>2 readr包及其内部的函数</strong></h3><p>tibble是data.frame数据框的一个变种， 改善了数据框的一些不适当的设计。</p>
+<p>readr包内部的read_csv()函数将CSV文件读取为tibble类型。</p>
+<p>类似地，readr包还有read_table2(), read_tsv(), read_fwf()等函数， 这些函数将读入的数据框保存为tibble类型。</p>
+<p>read_table2()读入用空格作为间隔的文本文件， 同一行的两个数据项之间可以用一个或多个空格分隔， 不需要空格个数相同， 也不需要上下对齐。 read_tsv()读入用制表符分隔的文件。 read_fwf()读入上下对齐的文本文件。</p>
+<p>另外， read_lines()函数将文本文件各行读入为一个字符型向量。 read_file()将文件内容读入成一整个字符串， read_file_raw()可以不管文件编码将文件读入为一个二进制字符串。</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-12-31T00:08:09+08:00"
-              content="2021-12-31">
-          12-31
-        </time>
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="linpandas 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="linpandas 支付宝">
+        <span>支付宝</span>
       </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/12/31/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/" itemprop="url">
-            <span itemprop="name"><b>应用回归分析-方差分析</b></span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-    </div>
   </div>
-  
-  
-  
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/R%E8%AF%AD%E8%A8%80/" rel="tag"># R语言</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/03/Blog%E5%AD%97%E4%BD%93%E6%A0%BC%E5%BC%8F%E6%A8%A1%E6%9D%BF/" rel="prev" title="<b>Blog排版随记</b>">
+                  <i class="fa fa-chevron-left"></i> <b>Blog排版随记</b>
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
 
 </div>
   </main>
