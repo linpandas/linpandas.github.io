@@ -20,23 +20,28 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta property="og:type" content="website">
-<meta property="og:title" content="杜遇随笔">
-<meta property="og:url" content="https://yoursite.com/categories/R%E8%AF%AD%E8%A8%80%E5%AE%9E%E6%88%98/index.html">
+<meta name="description" content="这篇文章简单介绍了笔者学习R语言中遇到的完成某些有用功能的自定义函数，本篇文章长期更新。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="&lt;b&gt;R一些有用的函数锦集&lt;&#x2F;b&gt;">
+<meta property="og:url" content="https://yoursite.com/2022/01/11/R%E4%B8%80%E4%BA%9B%E6%9C%89%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E9%94%A6%E9%9B%86/index.html">
 <meta property="og:site_name" content="杜遇随笔">
+<meta property="og:description" content="这篇文章简单介绍了笔者学习R语言中遇到的完成某些有用功能的自定义函数，本篇文章长期更新。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-01-11T11:15:31.809Z">
+<meta property="article:modified_time" content="2022-01-11T11:37:18.135Z">
 <meta property="article:author" content="linpandas">
+<meta property="article:tag" content="R语言">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://yoursite.com/categories/R%E8%AF%AD%E8%A8%80%E5%AE%9E%E6%88%98/">
+<link rel="canonical" href="https://yoursite.com/2022/01/11/R%E4%B8%80%E4%BA%9B%E6%9C%89%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E9%94%A6%E9%9B%86/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"categories/R语言实战/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2022/01/11/R%E4%B8%80%E4%BA%9B%E6%9C%89%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E9%94%A6%E9%9B%86/","path":"2022/01/11/R一些有用的函数锦集/","title":"\u003cb>R一些有用的函数锦集\u003c/b>"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>分类: R语言实战 | 杜遇随笔</title>
+<title><b>R一些有用的函数锦集</b> | 杜遇随笔</title>
   
 
 
@@ -101,7 +106,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -114,6 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#R%E4%B8%AD%E7%9A%84%E9%A2%9C%E8%89%B2"><span class="nav-number">1.</span> <span class="nav-text">R中的颜色</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,50 +181,141 @@
 </noscript>
 
 
-    <div class="main-inner category posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">R语言实战
-          <small>分类</small>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2022/01/11/R%E4%B8%80%E4%BA%9B%E6%9C%89%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E9%94%A6%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/portrait.gif">
+      <meta itemprop="name" content="linpandas">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杜遇随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          <b>R一些有用的函数锦集</b>
         </h1>
-      </div>
 
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+
+      <time title="创建时间：2022-01-11 19:15:31 / 修改时间：19:37:18" itemprop="dateCreated datePublished" datetime="2022-01-11T19:15:31+08:00">2022-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/R%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">R语言学习笔记</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>这篇文章简单介绍了笔者学习R语言中遇到的完成某些有用功能的自定义函数，本篇文章长期更新。</p>
+<span id="more"></span>
+<style type="text/css">
+body, td {
+   font-size: 16px;
+}
+code.r{
+  font-size: 20px;
+}
+pre {
+  font-size: 14px
+}
+</style>
+
+
+<h3 id="R中的颜色"><a href="#R中的颜色" class="headerlink" title="R中的颜色"></a>R中的颜色</h3><p>R中定义了六百多种颜色，可以用以下命令查看这些颜色的名字：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">colors()</span><br></pre></td></tr></table></figure>
+<p>运行结果所占篇幅过大，故本处只显示部分结果：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">head(colors(),<span class="number">6</span>)</span><br><span class="line"><span class="comment">## [1] &quot;white&quot;         &quot;aliceblue&quot;     &quot;antiquewhite&quot;  &quot;antiquewhite1&quot; &quot;antiquewhite2&quot;</span></span><br><span class="line"><span class="comment">## [6] &quot;antiquewhite3&quot;</span></span><br></pre></td></tr></table></figure>
+<p>我们想将这些颜色可视化，使我们能直观感受颜色的效果。下面的函数可以用来挑选颜色，鼠标点击画出的颜色就可以挑选， 结果返回挑选出的颜色名：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">select.colors &lt;- <span class="keyword">function</span>()&#123;</span><br><span class="line">  nc &lt;- <span class="built_in">length</span>(colors())</span><br><span class="line">  x &lt;- <span class="built_in">rep</span>(seq(<span class="number">26</span>), <span class="number">26</span>)[<span class="number">1</span>:nc]</span><br><span class="line">  y &lt;- <span class="built_in">rep</span>(seq(<span class="number">26</span>), each=<span class="number">26</span>)[<span class="number">1</span>:nc]</span><br><span class="line">  cols &lt;- colors()</span><br><span class="line">  plot(x, y, type=<span class="string">&quot;p&quot;</span>, pch=<span class="number">16</span>, cex=<span class="number">2</span>,</span><br><span class="line">       col=cols)</span><br><span class="line">  res &lt;- cols[identify(x,y, labels=cols)]</span><br><span class="line">  res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-12-31T00:08:09+08:00"
-              content="2021-12-31">
-          12-31
-        </time>
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="linpandas 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="linpandas 支付宝">
+        <span>支付宝</span>
       </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/12/31/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/" itemprop="url">
-            <span itemprop="name"><b>应用回归分析-方差分析</b></span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-    </div>
   </div>
-  
-  
-  
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/R%E8%AF%AD%E8%A8%80/" rel="tag"># R语言</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/" rel="prev" title="<b>R读取CSV格式的文件</b>">
+                  <i class="fa fa-chevron-left"></i> <b>R读取CSV格式的文件</b>
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
 
 </div>
   </main>
