@@ -22,13 +22,13 @@
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 <meta name="description" content="这篇文章简单介绍了笔者学习R语言中遇到的完成某些有用功能的自定义函数，本篇文章长期更新。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="&lt;b&gt;R一些有用的函数锦集&lt;&#x2F;b&gt;">
+<meta property="og:title" content="&lt;b&gt; R一些有用的函数锦集 &lt;&#x2F;b&gt;">
 <meta property="og:url" content="https://yoursite.com/2022/01/11/R%E4%B8%80%E4%BA%9B%E6%9C%89%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E9%94%A6%E9%9B%86/index.html">
 <meta property="og:site_name" content="杜遇随笔">
 <meta property="og:description" content="这篇文章简单介绍了笔者学习R语言中遇到的完成某些有用功能的自定义函数，本篇文章长期更新。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-11T11:15:31.809Z">
-<meta property="article:modified_time" content="2022-01-21T07:55:05.237Z">
+<meta property="article:modified_time" content="2022-02-05T10:05:56.409Z">
 <meta property="article:author" content="linpandas">
 <meta property="article:tag" content="R语言">
 <meta name="twitter:card" content="summary">
@@ -38,10 +38,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2022/01/11/R%E4%B8%80%E4%BA%9B%E6%9C%89%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E9%94%A6%E9%9B%86/","path":"2022/01/11/R一些有用的函数锦集/","title":"\u003cb>R一些有用的函数锦集\u003c/b>"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2022/01/11/R%E4%B8%80%E4%BA%9B%E6%9C%89%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E9%94%A6%E9%9B%86/","path":"2022/01/11/R一些有用的函数锦集/","title":"\u003cb> R一些有用的函数锦集 \u003c/b>"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title><b>R一些有用的函数锦集</b> | 杜遇随笔</title>
+<title><b> R一些有用的函数锦集 </b> | 杜遇随笔</title>
   
 
 
@@ -119,7 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#R%E4%B8%AD%E7%9A%84%E9%A2%9C%E8%89%B2"><span class="nav-number">1.</span> <span class="nav-text">R中的颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R%E4%B8%AD%E7%9A%84%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">R中的数学公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R%E8%AE%BE%E7%BD%AE%E6%B2%99%E7%9B%98%E7%8E%AF%E5%A2%83"><span class="nav-number">3.</span> <span class="nav-text">R设置沙盘环境</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#R%E4%B8%AD%E7%9A%84%E9%A2%9C%E8%89%B2"><span class="nav-number">1.</span> <span class="nav-text">R中的颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R%E4%B8%AD%E7%9A%84%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">R中的数学公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R%E8%AE%BE%E7%BD%AE%E6%B2%99%E7%9B%98%E7%8E%AF%E5%A2%83"><span class="nav-number">3.</span> <span class="nav-text">R设置沙盘环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#R%E6%95%B0%E6%8D%AE%E6%A0%87%E5%87%86%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">R数据标准化</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -205,7 +205,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          <b>R一些有用的函数锦集</b>
+          <b> R一些有用的函数锦集 </b>
         </h1>
 
         <div class="post-meta-container">
@@ -223,7 +223,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-21 15:55:05" itemprop="dateModified" datetime="2022-01-21T15:55:05+08:00">2022-01-21</time>
+      <time title="修改时间：2022-02-05 18:05:56" itemprop="dateModified" datetime="2022-02-05T18:05:56+08:00">2022-02-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -280,6 +280,16 @@ pre {
 <p>运行<code>sandbox()</code>函数，将出现如下的browser命令行：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">## 沙盘：接连的空行回车可以退出。</span><br><span class="line">## Called from: sandbox()</span><br><span class="line">## Browse[1]&gt; </span><br></pre></td></tr></table></figure>
 <p>提示符变成了“Browser[n]”，其中n代表层次序号。 在这样的browser命令行中随意定义变量， 定义的变量不会保存到工作空间中。 用“Q”命令可以退出这个沙盘环境， 接连回车也可以退出。</p>
+<h3 id="R数据标准化"><a href="#R数据标准化" class="headerlink" title="R数据标准化"></a>R数据标准化</h3><p>设x是各列都为数值的列表(包括数据框和tibble)或数值型矩阵， 用<code>scale(x)</code>可以把每一列都标准化，即每一列都减去该列的平均值，然后除以该列的样本标准差。 用<code>scale(x, center=TRUE, scale=FALSE)</code>仅中心化而不标准化。</p>
+<p>下面以一个班的学生数据作为例子， 数据保存在<a target="_blank" rel="noopener" href="https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbook/data/class.csv">class.csv</a>中。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">d.class |&gt; </span><br><span class="line">  select(height, weight) |&gt;</span><br><span class="line">  scale()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">##            height      weight</span><br><span class="line">##  [1,] -1.13843504 -0.70371312</span><br><span class="line">##  [2,]  0.57794313 -0.08897522</span><br><span class="line">##  [3,]  0.38290015 -0.44025402</span><br><span class="line">##  [4,] -1.17744363 -1.01108207</span><br><span class="line">##  [5,] -0.49479323 -0.68175819</span><br><span class="line">##  [6,]  0.81199469  0.52576268</span><br><span class="line">##  [7,] -2.15265850 -2.17469309</span><br><span class="line">##  [8,]  0.03182280  0.54771760</span><br><span class="line">##  [9,]  0.09033569  0.10861910</span><br><span class="line">## [10,]  1.29960213  0.54771760</span><br><span class="line">## [11,]  0.22686577  0.10861910</span><br><span class="line">## [12,]  0.90951618  1.44786952</span><br><span class="line">## [13,] -0.98240066 -0.74762297</span><br><span class="line">## [14,]  0.03182280 -0.70371312</span><br><span class="line">## [15,] -0.65082761 -0.02311045</span><br><span class="line">## [16,]  1.88473105  2.19433697</span><br><span class="line">## [17,]  0.48042164  1.22832027</span><br><span class="line">## [18,] -0.94339207 -0.65980327</span><br><span class="line">## [19,]  0.81199469  0.52576268</span><br><span class="line">## attr(,&quot;scaled:center&quot;)</span><br><span class="line">##    height    weight </span><br><span class="line">##  62.33684 100.02632 </span><br><span class="line">## attr(,&quot;scaled:scale&quot;)</span><br><span class="line">##    height    weight </span><br><span class="line">##  5.127075 22.773933</span><br></pre></td></tr></table></figure>
+<p>为了把x的每列变到$[0,1]$内，我们可以写一个自定义的进行零一标准化的函数<code>scale01()</code>：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scale01 &lt;- <span class="keyword">function</span>(x)&#123;</span><br><span class="line">  mind &lt;- apply(x, <span class="number">2</span>, <span class="built_in">min</span>)</span><br><span class="line">  maxd &lt;- apply(x, <span class="number">2</span>, <span class="built_in">max</span>)</span><br><span class="line">  scale(x, center=mind, scale=maxd-mind)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时函数<code>scale01()</code>是以如下公式对数据x进行零一标准化</p>
+<p><center>$$ x^{*}=\frac{x-\min x}{\max x-\min x} $$</center><br>沿用上述函数与数据，所得结果如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">d.class |&gt; </span><br><span class="line">  select(height, weight) |&gt;</span><br><span class="line">  scale01()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">##          height    weight</span><br><span class="line">##  [1,] 0.2512077 0.3366834</span><br><span class="line">##  [2,] 0.6763285 0.4773869</span><br><span class="line">##  [3,] 0.6280193 0.3969849</span><br><span class="line">##  [4,] 0.2415459 0.2663317</span><br><span class="line">##  [5,] 0.4106280 0.3417085</span><br><span class="line">##  [6,] 0.7342995 0.6180905</span><br><span class="line">##  [7,] 0.0000000 0.0000000</span><br><span class="line">##  [8,] 0.5410628 0.6231156</span><br><span class="line">##  [9,] 0.5555556 0.5226131</span><br><span class="line">## [10,] 0.8550725 0.6231156</span><br><span class="line">## [11,] 0.5893720 0.5226131</span><br><span class="line">## [12,] 0.7584541 0.8291457</span><br><span class="line">## [13,] 0.2898551 0.3266332</span><br><span class="line">## [14,] 0.5410628 0.3366834</span><br><span class="line">## [15,] 0.3719807 0.4924623</span><br><span class="line">## [16,] 1.0000000 1.0000000</span><br><span class="line">## [17,] 0.6521739 0.7788945</span><br><span class="line">## [18,] 0.2995169 0.3467337</span><br><span class="line">## [19,] 0.7342995 0.6180905</span><br><span class="line">## attr(,&quot;scaled:center&quot;)</span><br><span class="line">## height weight </span><br><span class="line">##   51.3   50.5 </span><br><span class="line">## attr(,&quot;scaled:scale&quot;)</span><br><span class="line">## height weight </span><br><span class="line">##   20.7   99.5</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -314,8 +324,8 @@ pre {
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/01/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/" rel="prev" title="<b>R读取CSV格式的文件</b>">
-                  <i class="fa fa-chevron-left"></i> <b>R读取CSV格式的文件</b>
+                <a href="/2022/01/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/" rel="prev" title="<b> R读取CSV格式的文件 </b>">
+                  <i class="fa fa-chevron-left"></i> <b> R读取CSV格式的文件 </b>
                 </a>
             </div>
             <div class="post-nav-item">

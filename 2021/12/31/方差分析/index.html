@@ -22,13 +22,13 @@
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 <meta name="description" content="这篇文章简单介绍了使用R语言做方差分析的基本指令与方法，并给出了一个简单的例子。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="&lt;b&gt;应用回归分析-方差分析&lt;&#x2F;b&gt;">
+<meta property="og:title" content="&lt;b&gt; 应用回归分析-方差分析 &lt;&#x2F;b&gt;">
 <meta property="og:url" content="https://yoursite.com/2021/12/31/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="杜遇随笔">
 <meta property="og:description" content="这篇文章简单介绍了使用R语言做方差分析的基本指令与方法，并给出了一个简单的例子。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-30T16:08:09.376Z">
-<meta property="article:modified_time" content="2022-01-11T11:35:27.723Z">
+<meta property="article:modified_time" content="2022-02-05T10:01:06.593Z">
 <meta property="article:author" content="linpandas">
 <meta property="article:tag" content="R语言">
 <meta property="article:tag" content="方差分析">
@@ -39,10 +39,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2021/12/31/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/","path":"2021/12/31/方差分析/","title":"\u003cb>应用回归分析-方差分析\u003c/b>"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2021/12/31/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/","path":"2021/12/31/方差分析/","title":"\u003cb> 应用回归分析-方差分析 \u003c/b>"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title><b>应用回归分析-方差分析</b> | 杜遇随笔</title>
+<title><b> 应用回归分析-方差分析 </b> | 杜遇随笔</title>
   
 
 
@@ -206,7 +206,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          <b>应用回归分析-方差分析</b>
+          <b> 应用回归分析-方差分析 </b>
         </h1>
 
         <div class="post-meta-container">
@@ -224,7 +224,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-01-11 19:35:27" itemprop="dateModified" datetime="2022-01-11T19:35:27+08:00">2022-01-11</time>
+      <time title="修改时间：2022-02-05 18:01:06" itemprop="dateModified" datetime="2022-02-05T18:01:06+08:00">2022-02-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -274,7 +274,7 @@ pre {
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model &lt;- lm(y~x)</span><br><span class="line">print(summary(model))</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">## </span><br><span class="line">## Call:</span><br><span class="line">## lm(formula = y ~ x)</span><br><span class="line">## </span><br><span class="line">## Residuals:</span><br><span class="line">##        1        2        3        4        5        6        7 </span><br><span class="line">## -0.54571  0.41571  0.28714 -0.12143  0.23000 -0.04857 -0.21714 </span><br><span class="line">## </span><br><span class="line">## Coefficients:</span><br><span class="line">##             Estimate Std. Error t value Pr(&gt;|t|)    </span><br><span class="line">## (Intercept)  22.6486     0.8417  26.907 1.33e-06 ***</span><br><span class="line">## x             0.2643     0.0346   7.639 0.000612 ***</span><br><span class="line">## ---</span><br><span class="line">## Signif. codes:  0 &#x27;***&#x27; 0.001 &#x27;**&#x27; 0.01 &#x27;*&#x27; 0.05 &#x27;.&#x27; 0.1 &#x27; &#x27; 1</span><br><span class="line">## </span><br><span class="line">## Residual standard error: 0.3661 on 5 degrees of freedom</span><br><span class="line">## Multiple R-squared:  0.9211,	Adjusted R-squared:  0.9053 </span><br><span class="line">## F-statistic: 58.36 on 1 and 5 DF,  p-value: 0.0006115</span><br></pre></td></tr></table></figure>
 <p>从回归结果可以看出，回归方程为  </p>
-<center> $y=22.6486+0.2643x$ </center>
+<center> $$ y=22.6486+0.2643x $$ </center>
 
 
 <ul>
@@ -288,12 +288,12 @@ pre {
 <h3 id="三、方差分析并查看结果"><a href="#三、方差分析并查看结果" class="headerlink" title="三、方差分析并查看结果"></a><strong>三、方差分析并查看结果</strong></h3><p>进行方差分析并给出结果并输出回归结果的R代码如下</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test &lt;- anova(model)</span><br><span class="line">print(summary(test))</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">##        Df        Sum Sq          Mean Sq         F value          Pr(&gt;F)         </span><br><span class="line">##  Min.   :1   Min.   :0.6702   Min.   :0.134   Min.   :58.36   Min.   :0.0006115  </span><br><span class="line">##  1st Qu.:2   1st Qu.:2.4584   1st Qu.:2.056   1st Qu.:58.36   1st Qu.:0.0006115  </span><br><span class="line">##  Median :3   Median :4.2465   Median :3.978   Median :58.36   Median :0.0006115  </span><br><span class="line">##  Mean   :3   Mean   :4.2465   Mean   :3.978   Mean   :58.36   Mean   :0.0006115  </span><br><span class="line">##  3rd Qu.:4   3rd Qu.:6.0347   3rd Qu.:5.901   3rd Qu.:58.36   3rd Qu.:0.0006115  </span><br><span class="line">##  Max.   :5   Max.   :7.8229   Max.   :7.823   Max.   :58.36   Max.   :0.0006115  </span><br><span class="line">##                                               NA&#x27;s   :1       NA&#x27;s   :1</span><br></pre></td></tr></table></figure>
-<h3 id="四、预测"><a href="#四、预测" class="headerlink" title="四、预测"></a><strong>四、预测</strong></h3><p>对x~0~=27.5，求y~0~的包含概率伟0.95的预测区间</p>
+<h3 id="四、预测"><a href="#四、预测" class="headerlink" title="四、预测"></a><strong>四、预测</strong></h3><p>对x=27.5，求y的包含概率伟0.95的预测区间</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x_new &lt;- data.frame(x=<span class="number">27.5</span>);x_new</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">##      x</span><br><span class="line">## 1 27.5</span><br></pre></td></tr></table></figure>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">predict(model,x_new,interval=<span class="string">&#x27;prediction&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">##        fit      lwr     upr</span><br><span class="line">## 1 29.91643 28.86325 30.9696</span><br></pre></td></tr></table></figure>
-<p>从图中我们可以看出，当x~0~=27.5时，y~0~的预测值为1 29.91643，95%的置信区间为[28.86325,30.9696]。</p>
+<p>从图中我们可以看出，当x=27.5时，y的预测值为29.91643，95%的置信区间为$[28.86325,30.9696]$。</p>
 <h3 id="五、附录"><a href="#五、附录" class="headerlink" title="五、附录"></a><strong>五、附录</strong></h3><p>上述例子的R完整代码如下</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 清空窗口</span></span><br><span class="line">rm(<span class="built_in">list</span>=ls())</span><br><span class="line"></span><br><span class="line"><span class="comment">## 数据处理</span></span><br><span class="line">x &lt;- <span class="built_in">c</span>(<span class="number">18</span>,<span class="number">20</span>,<span class="number">22</span>,<span class="number">24</span>,<span class="number">26</span>,<span class="number">28</span>,<span class="number">30</span>);</span><br><span class="line">y &lt;- <span class="built_in">c</span>(<span class="number">26.86</span>,<span class="number">28.35</span>,<span class="number">28.75</span>,<span class="number">28.87</span>,<span class="number">29.75</span>,<span class="number">30.00</span>,<span class="number">30.36</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">## 线性回归并查看结果</span></span><br><span class="line">model &lt;- lm(y~x)</span><br><span class="line">print(summary(model))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 方差分析并查看结果</span></span><br><span class="line">test &lt;- anova(model)</span><br><span class="line">print(summary(test))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 预测</span></span><br><span class="line">x_new &lt;- data.frame(x=<span class="number">27.5</span>);</span><br><span class="line">predict(model,x_new,interval=<span class="string">&#x27;prediction&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
@@ -333,8 +333,8 @@ pre {
             <div class="post-nav-item">
             </div>
             <div class="post-nav-item">
-                <a href="/2022/01/02/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/" rel="next" title="<b>R向量及其操作</b>">
-                  <b>R向量及其操作</b> <i class="fa fa-chevron-right"></i>
+                <a href="/2022/01/02/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/" rel="next" title="<b> R向量及其操作 </b>">
+                  <b> R向量及其操作 </b> <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
