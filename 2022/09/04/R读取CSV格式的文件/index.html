@@ -20,28 +20,28 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="这篇文章简单给出了笔者写Blog时发现的一些排版技巧。">
+<meta name="description" content="这篇文章简单介绍了R语言读取CSV格式文件的方法，包括自带的read.csv()函数和readr扩展包及其内部的函数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="&lt;b&gt; Blog排版随记 &lt;&#x2F;b&gt;">
-<meta property="og:url" content="https://yoursite.com/2022/01/03/Blog%E5%AD%97%E4%BD%93%E6%A0%BC%E5%BC%8F%E6%A8%A1%E6%9D%BF/index.html">
+<meta property="og:title" content="&lt;b&gt; R读取CSV格式的文件 &lt;&#x2F;b&gt;">
+<meta property="og:url" content="https://yoursite.com/2022/09/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/index.html">
 <meta property="og:site_name" content="杜遇随笔">
-<meta property="og:description" content="这篇文章简单给出了笔者写Blog时发现的一些排版技巧。">
+<meta property="og:description" content="这篇文章简单介绍了R语言读取CSV格式文件的方法，包括自带的read.csv()函数和readr扩展包及其内部的函数。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-03T02:45:40.913Z">
-<meta property="article:modified_time" content="2022-02-05T09:56:10.229Z">
+<meta property="article:published_time" content="2022-09-04T13:13:24.505Z">
+<meta property="article:modified_time" content="2022-02-05T09:56:16.000Z">
 <meta property="article:author" content="linpandas">
-<meta property="article:tag" content="Blog">
+<meta property="article:tag" content="R语言">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://yoursite.com/2022/01/03/Blog%E5%AD%97%E4%BD%93%E6%A0%BC%E5%BC%8F%E6%A8%A1%E6%9D%BF/">
+<link rel="canonical" href="https://yoursite.com/2022/09/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2022/01/03/Blog%E5%AD%97%E4%BD%93%E6%A0%BC%E5%BC%8F%E6%A8%A1%E6%9D%BF/","path":"2022/01/03/Blog字体格式模板/","title":"\u003cb> Blog排版随记 \u003c/b>"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2022/09/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/","path":"2022/09/04/R读取CSV格式的文件/","title":"\u003cb> R读取CSV格式的文件 \u003c/b>"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title><b> Blog排版随记 </b> | 杜遇随笔</title>
+<title><b> R读取CSV格式的文件 </b> | 杜遇随笔</title>
   
 
 
@@ -119,7 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AD%97%E4%BD%93%E5%8F%82%E6%95%B0%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4"><span class="nav-number">1.</span> <span class="nav-text">1 字体参数配置命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8A%98%E5%8F%A0%E6%96%87%E7%AB%A0%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">2 折叠文章正文</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-read-csv-%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">1 read.csv()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-readr%E5%8C%85%E5%8F%8A%E5%85%B6%E5%86%85%E9%83%A8%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">2 readr包及其内部的函数</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -134,7 +134,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -192,7 +192,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2022/01/03/Blog%E5%AD%97%E4%BD%93%E6%A0%BC%E5%BC%8F%E6%A8%A1%E6%9D%BF/">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2022/09/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/portrait.gif">
@@ -205,7 +205,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          <b> Blog排版随记 </b>
+          <b> R读取CSV格式的文件 </b>
         </h1>
 
         <div class="post-meta-container">
@@ -216,14 +216,23 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-01-03 10:45:40" itemprop="dateCreated datePublished" datetime="2022-01-03T10:45:40+08:00">2022-01-03</time>
+      <time title="创建时间：2022-09-04 21:13:24" itemprop="dateCreated datePublished" datetime="2022-09-04T21:13:24+08:00">2022-09-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-02-05 17:56:10" itemprop="dateModified" datetime="2022-02-05T17:56:10+08:00">2022-02-05</time>
+      <time title="修改时间：2022-02-05 17:56:16" itemprop="dateModified" datetime="2022-02-05T17:56:16+08:00">2022-02-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/R%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">R语言学习笔记</span></a>
+        </span>
     </span>
 
   
@@ -243,11 +252,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>这篇文章简单给出了笔者写Blog时发现的一些排版技巧。</p>
+        <p>这篇文章简单介绍了R语言读取CSV格式文件的方法，包括自带的read.csv()函数和readr扩展包及其内部的函数。</p>
 <span id="more"></span>
-<h3 id="1-字体参数配置命令"><a href="#1-字体参数配置命令" class="headerlink" title="1 字体参数配置命令"></a>1 字体参数配置命令</h3><p>为了改变Blog文章的字体大小，可以在.md文件的文件头下方加入如下的全局字体配置参数命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line"></span><br><span class="line">body, td &#123;</span><br><span class="line">   font-size: 16px;</span><br><span class="line">&#125;</span><br><span class="line">code.r&#123;</span><br><span class="line">  font-size: 20px;</span><br><span class="line">&#125;</span><br><span class="line">pre &#123;</span><br><span class="line">  font-size: 14px</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="2-折叠文章正文"><a href="#2-折叠文章正文" class="headerlink" title="2 折叠文章正文"></a>2 折叠文章正文</h3><p>写Blog时，如果只想在主页显示特定的介绍性的文字，而正文需要展开才能显示，那么可以在想要显示的文字下方加上如下命令：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- more --&gt;</span><br></pre></td></tr></table></figure><br>那么博客主页就只会显示该命令上方的文字，而命令下方的正文需要展开后才能显示。</p>
+<style type="text/css">
+
+body, td {
+   font-size: 16px;
+}
+code.r{
+  font-size: 20px;
+}
+pre {
+  font-size: 14px
+}
+</style>
+
+
+<h3 id="1-read-csv-函数"><a href="#1-read-csv-函数" class="headerlink" title="1 read.csv()函数"></a><strong>1 read.csv()函数</strong></h3><p>read.csv()函数将CSV文件读取为data.frame数据框。</p>
+<h3 id="2-readr包及其内部的函数"><a href="#2-readr包及其内部的函数" class="headerlink" title="2 readr包及其内部的函数"></a><strong>2 readr包及其内部的函数</strong></h3><p>tibble是data.frame数据框的一个变种， 改善了数据框的一些不适当的设计。</p>
+<p>readr包内部的read_csv()函数将CSV文件读取为tibble类型。</p>
+<p>类似地，readr包还有read_table2(), read_tsv(), read_fwf()等函数， 这些函数将读入的数据框保存为tibble类型。</p>
+<p>read_table2()读入用空格作为间隔的文本文件， 同一行的两个数据项之间可以用一个或多个空格分隔， 不需要空格个数相同， 也不需要上下对齐。 read_tsv()读入用制表符分隔的文件。 read_fwf()读入上下对齐的文本文件。</p>
+<p>另外， read_lines()函数将文本文件各行读入为一个字符型向量。 read_file()将文件内容读入成一整个字符串， read_file_raw()可以不管文件编码将文件读入为一个二进制字符串。</p>
+<p>本篇文章参考了北京大学李东风老师的《Rbook》：<a target="_blank" rel="noopener" href="https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbook/intro.html">李东风老师的Rbook</a></p>
 
     </div>
 
@@ -275,20 +302,20 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/Blog/" rel="tag"># Blog</a>
+              <a href="/tags/R%E8%AF%AD%E8%A8%80/" rel="tag"># R语言</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/01/03/R%E5%9B%A0%E5%AD%90%E7%B1%BB%E5%9E%8B/" rel="prev" title="<b> R因子类型 </b>">
-                  <i class="fa fa-chevron-left"></i> <b> R因子类型 </b>
+                <a href="/2022/09/04/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/" rel="prev" title="<b> R向量及其操作 </b>">
+                  <i class="fa fa-chevron-left"></i> <b> R向量及其操作 </b>
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/01/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/" rel="next" title="<b> R读取CSV格式的文件 </b>">
-                  <b> R读取CSV格式的文件 </b> <i class="fa fa-chevron-right"></i>
+                <a href="/2022/09/04/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/" rel="next" title="<b> 应用回归分析-方差分析 </b>">
+                  <b> 应用回归分析-方差分析 </b> <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -310,7 +337,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
