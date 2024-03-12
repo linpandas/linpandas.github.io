@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="项目描述：利用亚马逊的多语言购物会话数据预测每个会话的下一次点击，使用多路召回对物品进行粗排，根据数据集特点构建会话数据特征及产品数据特征，采用Blending策略融合多个LightGBM模型，预测召回物品中每个会话下一次最可能点击的100个物品。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于电商平台多语言会话数据的客户购物意图建模">
+<meta property="og:url" content="https://yoursite.com/2024/03/12/%E5%9F%BA%E4%BA%8E%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E5%A4%9A%E8%AF%AD%E8%A8%80%E4%BC%9A%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%A2%E6%88%B7%E8%B4%AD%E7%89%A9%E6%84%8F%E5%9B%BE%E5%BB%BA%E6%A8%A1/index.html">
+<meta property="og:site_name" content="杜遇随笔">
+<meta property="og:description" content="项目描述：利用亚马逊的多语言购物会话数据预测每个会话的下一次点击，使用多路召回对物品进行粗排，根据数据集特点构建会话数据特征及产品数据特征，采用Blending策略融合多个LightGBM模型，预测召回物品中每个会话下一次最可能点击的100个物品。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-12T14:52:25.000Z">
+<meta property="article:modified_time" content="2024-03-12T15:43:58.452Z">
+<meta property="article:author" content="linpandas">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://yoursite.com/2024/03/12/%E5%9F%BA%E4%BA%8E%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E5%A4%9A%E8%AF%AD%E8%A8%80%E4%BC%9A%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%A2%E6%88%B7%E8%B4%AD%E7%89%A9%E6%84%8F%E5%9B%BE%E5%BB%BA%E6%A8%A1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2024/03/12/%E5%9F%BA%E4%BA%8E%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E5%A4%9A%E8%AF%AD%E8%A8%80%E4%BC%9A%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%A2%E6%88%B7%E8%B4%AD%E7%89%A9%E6%84%8F%E5%9B%BE%E5%BB%BA%E6%A8%A1/","path":"2024/03/12/基于电商平台多语言会话数据的客户购物意图建模/","title":"基于电商平台多语言会话数据的客户购物意图建模"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>基于电商平台多语言会话数据的客户购物意图建模 | 杜遇随笔</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">杜遇随笔</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">数据预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">会话数据处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E5%93%81%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">物品数据处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">会话数据特征工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A7%E5%93%81%E6%95%B0%E6%8D%AE%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">产品数据特征工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%B7%AF%E5%8F%AC%E5%9B%9E"><span class="nav-number">2.3.</span> <span class="nav-text">多路召回</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E4%BC%BC%E7%89%A9%E5%93%81%E5%8F%AC%E5%9B%9E"><span class="nav-number">2.3.1.</span> <span class="nav-text">相似物品召回</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E7%8E%B0%E7%9F%A9%E9%98%B5co-visit-matrix%EF%BC%88i2i%EF%BC%89"><span class="nav-number">2.3.2.</span> <span class="nav-text">共现矩阵co-visit matrix（i2i）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MF%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%E7%B1%BB%E5%8F%AC%E5%9B%9E%EF%BC%88u2i%E5%8F%AC%E5%9B%9E%EF%BC%89"><span class="nav-number">2.3.3.</span> <span class="nav-text">MF矩阵分解类召回（u2i召回）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ProNE%E6%A8%A1%E5%9E%8B%E5%9B%BE%E5%8F%AC%E5%9B%9E"><span class="nav-number">2.3.4.</span> <span class="nav-text">ProNE模型图召回</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#item2vec%E5%8F%AC%E5%9B%9E%EF%BC%88i2i%E5%8F%AC%E5%9B%9E%EF%BC%89"><span class="nav-number">2.3.5.</span> <span class="nav-text">item2vec召回（i2i召回）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ranking"><span class="nav-number">2.4.</span> <span class="nav-text">Ranking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blending"><span class="nav-number">2.5.</span> <span class="nav-text">Blending</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="linpandas"
+      src="/images/portrait.gif">
+  <p class="site-author-name" itemprop="name">linpandas</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/linpandas" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;linpandas" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:juguodu@163.com" title="E-Mail → mailto:juguodu@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2024/03/12/%E5%9F%BA%E4%BA%8E%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E5%A4%9A%E8%AF%AD%E8%A8%80%E4%BC%9A%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%A2%E6%88%B7%E8%B4%AD%E7%89%A9%E6%84%8F%E5%9B%BE%E5%BB%BA%E6%A8%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/portrait.gif">
+      <meta itemprop="name" content="linpandas">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="杜遇随笔">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于电商平台多语言会话数据的客户购物意图建模
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-03-12 22:52:25 / 修改时间：23:43:58" itemprop="dateCreated datePublished" datetime="2024-03-12T22:52:25+08:00">2024-03-12</time>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>项目描述：利用亚马逊的多语言购物会话数据预测每个会话的下一次点击，使用多路召回对物品进行粗排，根据数据集特点构建会话数据特征及产品数据特征，采用Blending<br>策略融合多个LightGBM模型，预测召回物品中每个会话下一次最可能点击的100个物品。 </p>
+<span id="more"></span>
+<h1 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h1><h2 id="会话数据处理"><a href="#会话数据处理" class="headerlink" title="会话数据处理"></a>会话数据处理</h2><p>在数据预处理阶段，将会话数据转换成列表，并进行编号，这将作为查询用户行为的主键。</p>
+<p>为了解决训练数据少的问题，进行数据增强：将测试集会话内点击数大于3且下一个物品在之前没有浏览过的数据加入训练集。</p>
+<h2 id="物品数据处理"><a href="#物品数据处理" class="headerlink" title="物品数据处理"></a>物品数据处理</h2><p>将数据中价格过高的物品价格置空（离群值），并将日元通过汇率转换为欧元。</p>
+<h1 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h1><h2 id="会话数据特征工程"><a href="#会话数据特征工程" class="headerlink" title="会话数据特征工程"></a>会话数据特征工程</h2><p>在会话数据特征工程中，将地区进行编码（LabelEncoder），得到S_locale，计算每个会话内的物品数量S_session_length，每个会话内不重复的物品的数量S_nunique_item，每个会话内品牌的数量S_unique_brand，每个会话内的回购率S_ratio_repurchase，重复品牌率S_ratio_unique_brand，每个会话内价格的均值、最小值、最大值和标准差（S_mean_price等），每个会话内购买的最后一个物品的价格S_last_item_price，每个会话内已记录购买物品的颜色、大小、型号、材料、作家的数量。</p>
+<p>对购买了1,2,3件物品的会话，也分别统计购买物品的颜色、大小、型号、材料、作家的数量。</p>
+<h2 id="产品数据特征工程"><a href="#产品数据特征工程" class="headerlink" title="产品数据特征工程"></a>产品数据特征工程</h2><p>在产品数据特征工程中，对每个会话内的每个物品，选取物品id、地区、价格、品牌、颜色、大小、型号、材料、作家字段。统计每个物品部署在多少个地区P_n_unique_locale，在每个地区每个物品被购买了多少次P_purchase_count，在全球每个物品被购买了多少次P_purchase_count_global，在每个地区内每个物品被购买的次数乘以物品的价格P_total_amount，每个物品未被记录的颜色、大小、型号、材料、作家（P_is_color_null等），每个地区每个品牌被购买的数量P_brand_purchase_count，在全球每个地区每个品牌被购买的数量P_brand_purchase_count_global，在全球每个品牌被购买的总收益P_total_brand_amount，每个地区每个品牌被购买物品的平均值、最小值、最大值和标准差（P_brand_mean_price等），每个物品的价值和该品牌所有物品平均价值的差P_price_diff_to_avg_brand_price，每个地区购买物品的数量P_locale_purchase_count，每个地区购买的物品的总价值P_total_locale_amount，每个地区购买每个物品数量的比例P_purchase_count_ratio_to_locale，每个地区购买每个物品总价格的比例P_purchase_amount_ratio_to_locale，每个地区购买每种品牌数量的比例P_purchase_count_ratio_to_brand，每个地区购买每种品牌总价格的比例P_purchase_amount_ratio_to_brand。</p>
+<p>最后，将训练集中下一次点击的物品放入历史点击物品中。</p>
+<h2 id="多路召回"><a href="#多路召回" class="headerlink" title="多路召回"></a>多路召回</h2><p>召回：第一阶段是候选项目检索，包括从整个item库中检索出每个用户可能感兴趣的一组潜在产品。</p>
+<p>多路召回方法：相似物品召回，共访矩阵，mf（BPR，ALS），ProNE 模型（图召回），i2vec向量召回，每路召回50-200个物品。</p>
+<h3 id="相似物品召回"><a href="#相似物品召回" class="headerlink" title="相似物品召回"></a>相似物品召回</h3><p><strong>1、使用TF-IDF 矩阵来表示产品。为指定的 product_id 提取相应的 TF-IDF 向量，计算余弦相似度。</strong></p>
+<p>将产品数据中的产品名称、颜色、大小、型号、材料、作家、品牌、描述提取出来，并创建TF-IDF矩阵（TfidfVectorizer）。对每个地区，提取每个产品的TF-IDF向量，并计算该产品与其他产品的余弦相似度，选取前200个产品，并生成排名。<br>将三个地区的数据concatenate在一起，得到待推荐列表，结合训练数据计算出该路召回的@MRR100为0.20243。</p>
+<p><strong>2、基于bert算向量，计算余弦相似度。</strong></p>
+<p>对每个地区，将产品数据中的产品id和产品名称提取出来，使用transformer库中提供的bert预训练模型（AutoModel），得到titile的embedding向量（AutoTokenizer），再用AnnoyIndex库计算各向量两两之间的相似度并构建索引，对每个用户，取前100个产品，并生成排名。<br>将三个地区的数据concatenate在一起，得到待推荐列表。结合训练数据计算出该路召回的@MRR100为0.16878。</p>
+<h3 id="共现矩阵co-visit-matrix（i2i）"><a href="#共现矩阵co-visit-matrix（i2i）" class="headerlink" title="共现矩阵co-visit matrix（i2i）"></a>共现矩阵co-visit matrix（i2i）</h3><p>尝试了五种处理方法：</p>
+<p>1，基于时间窗口的共现矩阵，每个交互的物品十个时间窗口加权，得到的权重，然后每个物品对权重加起来，就是共现矩阵，反应的是这个物品相似的top200个物品，这种处理方法的MRR@100为0.23472。</p>
+<p>2，将时间窗口调整为3，窗口内每个物品的权重调整为1，考虑近期的兴趣的共现矩阵，这种处理方法的MRR@100为0.22068。</p>
+<p>3，将时间窗口调整为5，窗口内每个物品的权重调整为1，考虑近期的兴趣的共现矩阵，这种处理方法的MRR@100为0.21706。</p>
+<p>4，考虑更紧密的物品对共现关系，只保留序列号差为 1 的物品对，即该函数只考虑在会话中紧接着彼此出现的物品对，权重为1，这种处理方法的MRR@100为0.22085。</p>
+<p>5，基于时间窗口计算流行度，除了计算共现权重，还引入了lift的计算。lift是一个衡量两个物品共现强度相对于它们独立出现概率的指标。计算公式是共现权重除以两个物品出现次数的平方根的乘积，这样能更反应物品流行度，这种处理方法的MRR@100为0.23235。</p>
+<h3 id="MF矩阵分解类召回（u2i召回）"><a href="#MF矩阵分解类召回（u2i召回）" class="headerlink" title="MF矩阵分解类召回（u2i召回）"></a>MF矩阵分解类召回（u2i召回）</h3><p>先构建u2i，i2i索引,利用LIL构建稀疏矩阵，u2i的矩阵中存在的权重为1，转换为CSR格式，训练MF类模型，基于模型输出的分数，每个用户返回50-200个item</p>
+<p><strong>1、BPR召回</strong></p>
+<p>Bayesian Personalized Ranking (BPR)基于Matrix Factorization，BPR 是为隐式反馈数据设计的，特别是在用户-物品交互中只有正面信号（如点击、购买）的情况。它的优化目标是最大化用户偏好的预测排序，特别关注于正确排序用户的物品对。</p>
+<p>构建u2i，i2i索引，进而用LIL构建稀疏矩阵，而后用贝叶斯个性化排序（BPR）的矩阵分解算法，对每个用户，取前50个产品，并生成排名。</p>
+<p>将三个地区的数据concatenate在一起，得到用户的待推荐列表。结合训练数据计算出该路召回的@MRR100为0.11601。</p>
+<p><strong>2、ALS召回</strong></p>
+<p>Alternating Least Squares (ALS)基于Matrix Factorization，ALS 主要用于最小化用户-物品交互矩阵的重建误差。它通过交替固定用户或物品的因子向量，来最小化预测和实际评分之间的平方误差。ALS 适用于显式反馈（如评分）和隐式反馈。</p>
+<p>构建u2i，i2i索引，进而用LIL构建稀疏矩阵，而后用交替最小二乘排序（ALS）的矩阵分解算法，对每个用户，取前200个产品，并生成排名。</p>
+<p>将三个地区的数据concatenate在一起，得到用户的待推荐列表。结合训练数据计算出该路召回的@MRR100为0.20114。</p>
+<h3 id="ProNE模型图召回"><a href="#ProNE模型图召回" class="headerlink" title="ProNE模型图召回"></a>ProNE模型图召回</h3><p>构建交互关系图，训练ProNE模型得到item向量表示，利用Annoy 近似最近邻索引库构建ANN索引，对每个item，使用 ANN 索引查询其最相似的topk item。</p>
+<p>对每个物品，根据他在每个会话中的上下文位置，将其与邻接的物品视为一种关系，从而形成网络。通过ProNE模型将该网络进行嵌入、训练，得到物品的embedding矩阵，利用Annoy近似最近邻索引库构建ANN索引，对每个item，使用 ANN 索引查询其最相似的前25个物品，得到待推荐列表。结合训练数据计算出该路召回的@MRR100为0.11598。</p>
+<h3 id="item2vec召回（i2i召回）"><a href="#item2vec召回（i2i召回）" class="headerlink" title="item2vec召回（i2i召回）"></a>item2vec召回（i2i召回）</h3><p>将用户的交互历史转换为list，基于word2vec训练学习item间向量表示，遍历 Word2Vec 模型的所有的item向量，并对每个物品找出最相似的topk item（最近邻），对每个item，记录其最近邻的item ID 和相似度得分，得到nns-matrix。</p>
+<p>对每个会话，将历史点击物品输入Word2Vec模型，学习物品间的向量表示，对每个物品，记录其最近邻的item ID 和相似度得分，得到nns-matrix。进而找出最相似的前25个物品，得到待推荐列表。结合训练数据计算出该路召回的@MRR100为0.18022。</p>
+<h2 id="Ranking"><a href="#Ranking" class="headerlink" title="Ranking"></a>Ranking</h2><p>通过GroupKFold方法将数据分割为训练集和验证集，使用LightGBM模型，以NDCG为评估指标，gbdt为增强方法，进行梯度提升。根据参数的不同，采用了4种处理方法：</p>
+<p>1，学习率为0.1的情况下，分别将树的最大深度设置为7，10，13。</p>
+<p>2，树的最大深度为10的情况下，将学习率设置为0.05。</p>
+<p>由此得到了4个模型以及对应的特征排名，4个模型排名靠前的特征为：co_visit_rank_last1，lift_last1，similarity_rank_last_1，graph_emb_similarity_last_1，lift_rank_last_1。</p>
+<h2 id="Blending"><a href="#Blending" class="headerlink" title="Blending"></a>Blending</h2><p>排名融合（Rank Fusion）：cust_blend这个函数将根据weight和base计算每个item的综合分数。</p>
+<p>1，计算逻辑：</p>
+<ol>
+<li><p>对于每个model的推荐list，根据item在列表中的位置和给定的权重计算分数。</p>
+</li>
+<li><p>分数计算公式为$\frac{W[M]}{n+base}$ ，其中$W[M]$是模型的权重，$n$是物品在推荐列表中的位置，$base$是基数，用于调整位置的影响。</p>
+</li>
+<li><p>将所有模型对同一物品的分数累加，得到该物品的总分。</p>
+</li>
+</ol>
+<p>2，对于 sub 中的每一行（即每个session），应用 cust_blend 函数生成融合后的推荐list。</p>
+<p>3，排序并选取每个session的前 100 个item 优点：使用排名融合而非简单的预测平均，可以更好地考虑不同模型在物品排名上的差异。</p>
+<p>召回物品精排后推荐结果@MRR100为0.35194。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="linpandas 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="linpandas 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/12/04/Daily_Record/DDPM-%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86%E7%AF%87/" rel="prev" title="DDPM_模型原理篇">
+                  <i class="fa fa-chevron-left"></i> DDPM_模型原理篇
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">linpandas</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
