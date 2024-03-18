@@ -20,28 +20,27 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="这篇文章简单介绍了R语言读取CSV格式文件的方法，包括自带的read.csv()函数和readr扩展包及其内部的函数。">
+<meta name="description" content="本篇文章记录笔者刷LeetCode的一些总结。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="&lt;b&gt; R读取CSV格式的文件 &lt;&#x2F;b&gt;">
-<meta property="og:url" content="https://yoursite.com/2022/09/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:title" content="LeetCode总结">
+<meta property="og:url" content="https://yoursite.com/2024/03/18/Leetcode%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="杜遇随笔">
-<meta property="og:description" content="这篇文章简单介绍了R语言读取CSV格式文件的方法，包括自带的read.csv()函数和readr扩展包及其内部的函数。">
+<meta property="og:description" content="本篇文章记录笔者刷LeetCode的一些总结。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-04T13:13:24.505Z">
-<meta property="article:modified_time" content="2022-02-05T09:56:16.000Z">
+<meta property="article:published_time" content="2024-03-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-18T01:36:20.424Z">
 <meta property="article:author" content="linpandas">
-<meta property="article:tag" content="R语言">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://yoursite.com/2022/09/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/">
+<link rel="canonical" href="https://yoursite.com/2024/03/18/Leetcode%E6%80%BB%E7%BB%93/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2022/09/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/","path":"2022/09/04/R读取CSV格式的文件/","title":"\u003cb> R读取CSV格式的文件 \u003c/b>"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yoursite.com/2024/03/18/Leetcode%E6%80%BB%E7%BB%93/","path":"2024/03/18/Leetcode总结/","title":"LeetCode总结"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title><b> R读取CSV格式的文件 </b> | 杜遇随笔</title>
+<title>LeetCode总结 | 杜遇随笔</title>
   
 
 
@@ -119,7 +118,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-read-csv-%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">1 read.csv()函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-readr%E5%8C%85%E5%8F%8A%E5%85%B6%E5%86%85%E9%83%A8%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">2 readr包及其内部的函数</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">1.</span> <span class="nav-text">二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.</span> <span class="nav-text">二叉树的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%AF%E5%90%A6%E5%AF%B9%E7%A7%B0%EF%BC%9F%E6%98%AF%E5%90%A6%E7%9B%B8%E5%90%8C%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">是否对称？是否相同？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6%EF%BC%9F%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6%EF%BC%9F"><span class="nav-number">1.1.2.</span> <span class="nav-text">最大深度？最小深度？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E4%B8%AA%E6%95%B0%EF%BC%9F"><span class="nav-number">1.1.3.</span> <span class="nav-text">节点个数？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%AF%E5%90%A6%E5%B9%B3%E8%A1%A1%EF%BC%9F"><span class="nav-number">1.1.4.</span> <span class="nav-text">是否平衡？</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -192,7 +191,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2022/09/04/R%E8%AF%BB%E5%8F%96CSV%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="https://yoursite.com/2024/03/18/Leetcode%E6%80%BB%E7%BB%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/portrait.gif">
@@ -205,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          <b> R读取CSV格式的文件 </b>
+          LeetCode总结
         </h1>
 
         <div class="post-meta-container">
@@ -215,24 +214,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2022-09-04 21:13:24" itemprop="dateCreated datePublished" datetime="2022-09-04T21:13:24+08:00">2022-09-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-02-05 17:56:16" itemprop="dateModified" datetime="2022-02-05T17:56:16+08:00">2022-02-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/R%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">R语言学习笔记</span></a>
-        </span>
+      <time title="创建时间：2024-03-18 00:00:00 / 修改时间：09:36:20" itemprop="dateCreated datePublished" datetime="2024-03-18T00:00:00+08:00">2024-03-18</time>
     </span>
 
   
@@ -252,29 +236,40 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>这篇文章简单介绍了R语言读取CSV格式文件的方法，包括自带的read.csv()函数和readr扩展包及其内部的函数。</p>
+        <p>本篇文章记录笔者刷LeetCode的一些总结。</p>
 <span id="more"></span>
-<style type="text/css">
-
-body, td {
-   font-size: 16px;
-}
-code.r{
-  font-size: 20px;
-}
-pre {
-  font-size: 14px
-}
-</style>
-
-
-<h3 id="1-read-csv-函数"><a href="#1-read-csv-函数" class="headerlink" title="1 read.csv()函数"></a><strong>1 read.csv()函数</strong></h3><p>read.csv()函数将CSV文件读取为data.frame数据框。</p>
-<h3 id="2-readr包及其内部的函数"><a href="#2-readr包及其内部的函数" class="headerlink" title="2 readr包及其内部的函数"></a><strong>2 readr包及其内部的函数</strong></h3><p>tibble是data.frame数据框的一个变种， 改善了数据框的一些不适当的设计。</p>
-<p>readr包内部的read_csv()函数将CSV文件读取为tibble类型。</p>
-<p>类似地，readr包还有read_table2(), read_tsv(), read_fwf()等函数， 这些函数将读入的数据框保存为tibble类型。</p>
-<p>read_table2()读入用空格作为间隔的文本文件， 同一行的两个数据项之间可以用一个或多个空格分隔， 不需要空格个数相同， 也不需要上下对齐。 read_tsv()读入用制表符分隔的文件。 read_fwf()读入上下对齐的文本文件。</p>
-<p>另外， read_lines()函数将文本文件各行读入为一个字符型向量。 read_file()将文件内容读入成一整个字符串， read_file_raw()可以不管文件编码将文件读入为一个二进制字符串。</p>
-<p>本篇文章参考了北京大学李东风老师的《Rbook》：<a target="_blank" rel="noopener" href="https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbook/intro.html">李东风老师的Rbook</a></p>
+<h1 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h1><p>记得处理根节点为空的情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if not root:</span><br><span class="line">    return root(None/0/True/False/[])</span><br></pre></td></tr></table></figure>
+<h2 id="二叉树的属性"><a href="#二叉树的属性" class="headerlink" title="二叉树的属性"></a>二叉树的属性</h2><h3 id="是否对称？是否相同？"><a href="#是否对称？是否相同？" class="headerlink" title="是否对称？是否相同？"></a>是否对称？是否相同？</h3><ul>
+<li>递归法：以<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/symmetric-tree/description/">101.对称二叉树</a>为例，<strong>判断两颗树是否对称</strong>的代码模板：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def compare(left, right):</span><br><span class="line">    if not left and not right:</span><br><span class="line">        return True</span><br><span class="line">    if not left or not right or left.val != right.val:</span><br><span class="line">        return False</span><br><span class="line"></span><br><span class="line">    inside = compare(left.right, right.left)</span><br><span class="line">    outside = compare(left.left, right.right)</span><br><span class="line"></span><br><span class="line">    return inside and outside</span><br></pre></td></tr></table></figure>
+<p>判断两颗树是否相同类似，只需将inside和outside改为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">inside = compare(left.left, right.left)</span><br><span class="line">outside = compare(left.right, right.right)</span><br></pre></td></tr></table></figure>
+<p>即可，例题：</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/same-tree/description/">100.相同的树</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subtree-of-another-tree/">572.另一棵树的子树</a></p>
+<ul>
+<li>迭代法：层序遍历。</li>
+</ul>
+<h3 id="最大深度？最小深度？"><a href="#最大深度？最小深度？" class="headerlink" title="最大深度？最小深度？"></a>最大深度？最小深度？</h3><ul>
+<li>迭代法：层序遍历。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-depth-of-binary-tree/description/">104.二叉树的最大深度</a></p>
+<p>层序遍历的最后一层深度即为最大深度。</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-depth-of-binary-tree/description/">111.二叉树的最小深度</a></p>
+<p>最小深度的判断条件为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if not node.left and not node.right:</span><br><span class="line">    return depth</span><br></pre></td></tr></table></figure>
+<ul>
+<li>递归法：后序遍历。</li>
+</ul>
+<h3 id="节点个数？"><a href="#节点个数？" class="headerlink" title="节点个数？"></a>节点个数？</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-complete-tree-nodes/description/">222.完全二叉树的节点个数</a></p>
+<ul>
+<li>迭代法：层序遍历。</li>
+<li>递归法：后序遍历。</li>
+</ul>
+<h3 id="是否平衡？"><a href="#是否平衡？" class="headerlink" title="是否平衡？"></a>是否平衡？</h3><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/balanced-binary-tree/description/">110.平衡二叉树</a></p>
+<p><strong>平衡二叉树</strong>是指该树所有节点的左右子树的深度相差不超过 1。</p>
 
     </div>
 
@@ -301,22 +296,16 @@ pre {
   </div>
 </div>
 
-          <div class="post-tags">
-              <a href="/tags/R%E8%AF%AD%E8%A8%80/" rel="tag"># R语言</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/09/04/R%E5%90%91%E9%87%8F%E5%8F%8A%E5%85%B6%E6%93%8D%E4%BD%9C/" rel="prev" title="<b> R向量及其操作 </b>">
-                  <i class="fa fa-chevron-left"></i> <b> R向量及其操作 </b>
+                <a href="/2024/03/12/%E5%9F%BA%E4%BA%8E%E7%94%B5%E5%95%86%E5%B9%B3%E5%8F%B0%E5%A4%9A%E8%AF%AD%E8%A8%80%E4%BC%9A%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AE%A2%E6%88%B7%E8%B4%AD%E7%89%A9%E6%84%8F%E5%9B%BE%E5%BB%BA%E6%A8%A1/" rel="prev" title="基于电商平台多语言会话数据的客户购物意图建模">
+                  <i class="fa fa-chevron-left"></i> 基于电商平台多语言会话数据的客户购物意图建模
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/09/04/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/" rel="next" title="<b> 应用回归分析-方差分析 </b>">
-                  <b> 应用回归分析-方差分析 </b> <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
