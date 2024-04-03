@@ -28,7 +28,7 @@
 <meta property="og:description" content="本系列文章记录笔者刷LeetCode的一些总结，本文为贪心算法篇。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-04-01T02:18:04.125Z">
+<meta property="article:modified_time" content="2024-04-03T03:38:42.538Z">
 <meta property="article:author" content="linpandas">
 <meta name="twitter:card" content="summary">
 
@@ -118,7 +118,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">贪心算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%AA%E5%BF%83%E7%AE%80%E5%8D%95%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">贪心简单题</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">贪心算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%AA%E5%BF%83%E7%AE%80%E5%8D%95%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">贪心简单题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%AA%E5%BF%83%E4%B8%AD%E7%AD%89%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">贪心中等题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%AA%E5%BF%83%E8%A7%A3%E5%86%B3%E8%82%A1%E7%A5%A8%E9%97%AE%E9%A2%98"><span class="nav-number">1.3.</span> <span class="nav-text">贪心解决股票问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AA%E7%BB%B4%E5%BA%A6%E6%9D%83%E8%A1%A1%E9%97%AE%E9%A2%98"><span class="nav-number">1.4.</span> <span class="nav-text">两个维度权衡问题</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -222,7 +222,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-01 10:18:04" itemprop="dateModified" datetime="2024-04-01T10:18:04+08:00">2024-04-01</time>
+      <time title="修改时间：2024-04-03 11:38:42" itemprop="dateModified" datetime="2024-04-03T11:38:42+08:00">2024-04-03</time>
     </span>
 
   
@@ -245,7 +245,45 @@
         <p>本系列文章记录笔者刷LeetCode的一些总结，本文为贪心算法篇。</p>
 <span id="more"></span>
 <h1 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h1><p>贪心算法无固定解题模板，只要能从局部最优推出全局最优，即可使用贪心。</p>
-<h2 id="贪心简单题"><a href="#贪心简单题" class="headerlink" title="贪心简单题"></a>贪心简单题</h2>
+<h2 id="贪心简单题"><a href="#贪心简单题" class="headerlink" title="贪心简单题"></a>贪心简单题</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/assign-cookies/description/">455. 分发饼干</a></p>
+<p>对孩子的胃口值和饼干的尺寸排序后，可以从小到大遍历饼干尺寸，也可以从大到小遍历孩子的胃口值。</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximize-sum-of-array-after-k-negations/description/">1005. K 次取反后最大化的数组和</a></p>
+<p>将数组按绝对值大小从大到小排序后，将负数按k的剩余数量取反即可，若数组中全为非负数，则根据k的奇偶性对数组的最后一个数做处理即可。</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lemonade-change/description/">860. 柠檬水找零</a></p>
+<p>统计手中5美元和10美元的数量，根据顾客支付的钱分别进行判断和数量加减即可。</p>
+<h2 id="贪心中等题"><a href="#贪心中等题" class="headerlink" title="贪心中等题"></a>贪心中等题</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/wiggle-subsequence/description/">376. 摆动序列</a></p>
+<p>需要考虑单调有平坡，上下中间有平坡的情况，以及数组首尾两端元素，将result初始化为1。</p>
+<p>判断体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for i in range(len(nums)-1):</span><br><span class="line">    curdiff = nums[i+1] - nums[i]</span><br><span class="line">    if (prediff &lt;= 0 and curdiff &gt; 0) or (prediff &gt;= 0 and curdiff &lt; 0):</span><br><span class="line">        result += 1</span><br><span class="line">        prediff = curdiff</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/monotone-increasing-digits/description/">738. 单调递增的数字</a></p>
+<p>将数字每一位按顺序拆分成一个列表，从后向前遍历，记录满足递增的最后一位，用flag标记，然后将flag之后的数字变为9，如</p>
+<p>332| -&gt; 32|2 -&gt; 2|22 -&gt; 2|99</p>
+<p>其中|所在的位置为flag标记的位置。</p>
+<p>判断体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">for i in range(len(factors)-2, -1, -1):</span><br><span class="line">    # 从后往前遍历</span><br><span class="line">    if factors[i] &gt; factors[i+1]:</span><br><span class="line">        factors[i] -= 1</span><br><span class="line">        flag = i+1</span><br><span class="line"></span><br><span class="line">for i in range(flag, len(factors)):</span><br><span class="line">    factors[i] = 9</span><br></pre></td></tr></table></figure>
+<h2 id="贪心解决股票问题"><a href="#贪心解决股票问题" class="headerlink" title="贪心解决股票问题"></a>贪心解决股票问题</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/description/">122. 买卖股票的最佳时机 II</a></p>
+<p>将股票收益分解为每日收益之和，若收益&gt;0，则购买股票，反之则出售股票。</p>
+<p>判断体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for i in range(1, len(prices)):</span><br><span class="line">    result += max(prices[i] - prices[i-1], 0)</span><br></pre></td></tr></table></figure>
+<h2 id="两个维度权衡问题"><a href="#两个维度权衡问题" class="headerlink" title="两个维度权衡问题"></a>两个维度权衡问题</h2><p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/candy/description/">135. 分发糖果</a></p>
+<p>分“右孩子大于左孩子”和“左孩子大于右孩子”两个维度分别进行处理，因为每个孩子至少分配到一个糖果，故初始化为1。</p>
+<p>判断体：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 右孩子大于左孩子</span><br><span class="line">for i in range(1, len(ratings)):</span><br><span class="line">    if ratings[i] &gt; ratings[i-1]:</span><br><span class="line">        candyVec[i] = candyVec[i-1] + 1</span><br><span class="line"></span><br><span class="line"># 左孩子大于右孩子</span><br><span class="line">for i in range(len(ratings)-2, -1, -1):</span><br><span class="line">    if ratings[i] &gt; ratings[i+1]:</span><br><span class="line">        candyVec[i] = max(candyVec[i+1] + 1, candyVec[i])</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/queue-reconstruction-by-height/description/">406. 根据身高重建队列</a></p>
+<p>分h和k两个维度进行处理，先将people按h从大到小排序，再按k从小到大排序，设置空队列queue，按顺序插入，若排序完的people为：</p>
+<p>people： [[7,0], [7,1], [6,1], [5,0], [5,2]，[4,4]]</p>
+<p>则插入过程如下：</p>
+<ul>
+<li>插入[7,0]：[[7,0]]</li>
+<li>插入[7,1]：[[7,0],[7,1]]</li>
+<li>插入[6,1]：[[7,0],[6,1],[7,1]]</li>
+<li>插入[5,0]：[[5,0],[7,0],[6,1],[7,1]]</li>
+<li>插入[5,2]：[[5,0],[7,0],[5,2],[6,1],[7,1]]</li>
+<li>插入[4,4]：[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]</li>
+</ul>
+<p>代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">people.sort(key = lambda x: (-x[0], x[1]))</span><br><span class="line"></span><br><span class="line">queue = []</span><br><span class="line">for p in people:</span><br><span class="line">    queue.insert(p[1], p)</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
